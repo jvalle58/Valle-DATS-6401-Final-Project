@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="final-project-style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATS 6401 - Final Project - Joseph Valle (Raytheon Technologies)</title>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(GoogleDraw);
+
+        function GoogleDraw() {
+            Drawing('raytheon-technologies', 'SELECT C,G', RTXHistoricalClosingPrices);
+            Drawing('greatest-closes-returns', 'SELECT AW,AY', RTXGreatestCloses);
+            Drawing('shares', 'SELECT A,F', RTXCloseShares);
+            Drawing('greatest-closes-returns', 'SELECT BC,BF', RTXGreatestReturns);
+            Drawing('annuals', 'SELECT Q,S', RTXAnnualReturns);
+            Drawing('shares', 'SELECT H,M', RTXVolumeShares);
+            Drawing('greatest-volumes', 'SELECT BA,BB', RTXGreatestVolumes);
+        }
+
+        function Drawing(sheet, query, StockVisual){
+            var Selection = encodeURIComponent(query);
+            var query = new google.visualization.Query(
+                'https://docs.google.com/spreadsheets/d/1BlxmZ4Fu3UHgxLBSt1OmNijkEfIoAWXBnZXWpousGeE/gviz/tq?sheet='
+                + sheet + '&headers=1&tq=' + Selection);
+                query.send(StockVisual);
+        }
+
+        function Warning(response){
+            if (response.isError()) {
+                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                return;
+            }
+        }
+
+        function RTXHistoricalClosingPrices(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Historical Closing Prices of Raytheon Technologies Stock from 1985 to 2021',
+                colors: ['#cd2626'],
+                vAxis: {title: 'Closing Price ($)'},
+                hAxis: {title: 'Date'},
+                legend: 'none',
+            };
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, prefix: '$'});
+            formatter.format(data,1);
+
+            var chart = new google.visualization.AreaChart(document.getElementById('rtx_historical_prices_div'));
+            chart.draw(data, options);
+        }
+
+        function RTXGreatestCloses(response){
+            Warning(response);
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+            var options = {
+                title: 'Greatest Absolute Rises and Declines in Raytheon Technologies Stock from 1985 to 2021',
+                vAxis: {title: 'Date'},
+                hAxis: {title: 'Change in Closing Price ($)'},
+                colors: ['#cd2626'],
+                legend: 'none',
+            }
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, prefix: '$'});
+                formatter.format(data,1);
+
+            var chart = new google.visualization.BarChart(document.getElementById('rtx_greatest_closes_div'));
+            chart.draw(data, options);
+        }
+
+        function RTXCloseShares(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Frequency Shares of Closing Price Ranges for Raytheon Technologies Stock from 1985 to 2021',
+                pieHole: 0.35,
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('rtx_close_shares_div'));
+            chart.draw(data, options);
+        }
+
+        function RTXGreatestReturns(response){
+            Warning(response);
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+            var options = {
+                title: 'Greatest Relative Rises and Declines in Raytheon Technologies Stock from 1985 to 2021',
+                vAxis: {title: 'Date'},
+                hAxis: {title: 'Daily Return (%)'},
+                colors: ['#cd2626'],
+                legend: 'none',
+            }
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+                formatter.format(data,1);
+
+            var chart = new google.visualization.BarChart(document.getElementById('rtx_greatest_returns_div'));
+            chart.draw(data, options);
+        }
+
+        function RTXAnnualReturns(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Raytheon Technologies Annual Returns from 1985 to 2021',
+                vAxis: {title: 'Annual Return (%)'},
+                hAxis: {
+                    title: 'Year',
+                    format: '0000',
+                },
+                colors: ['#cd2626'],
+                lineWidth: 3,
+                legend: 'none',
+            }
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+                formatter.format(data,1);
+
+            var chart = new google.visualization.LineChart(document.getElementById('rtx_annual_returns_div'));
+            chart.draw(data, options);
+        }
+
+        function RTXVolumeShares(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Frequency Shares of Volume Ranges for Raytheon Technologies Stock from 1985 to 2021',
+                pieHole: 0.35,
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('rtx_volume_shares_div'));
+            chart.draw(data, options);
+        }
+
+        function RTXGreatestVolumes(response){
+            Warning(response);
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+            var options = {
+                title: 'Trading Sessions with the Greatest Volumes for Raytheon Technologies Stock from 1985 to 2021',
+                hAxis: {title: 'Date'},
+                vAxis: {title: 'Volume'},
+                colors: ['#cd2626'],
+                legend: 'none',
+            }
+            var chart = new google.visualization.ColumnChart(document.getElementById('rtx_greatest_volumes_div'));
+            chart.draw(data, options);
+        }
+
+    </script>
+       
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div id="logo">
+                <div id="logo_text">
+                    <h1>Defense Contractors in the Stock Market from 1985 to 2021</h1>
+                    <h2></h2>
+                    <h2>DATS 6401 - Joseph Valle</h3>
+                    <h2></h2>
+                    <h3><a href= "https://jvalle58.github.io/Valle-DATS-6401-Final-Project/">GitHub.io Link</a></h3>
+                    <h3></h3>
+                    <h3><a href= "https://github.com/jvalle58/Valle-DATS-6401-Final-Project">GitHub Repository Link</a></h3>
+                    <h3></h3>
+                    <h3><a href= "https://www.w3schools.com/css/css_link.asp">Zenodo Link</a></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar">
+        <a href="stocks_home.html">Home</a>
+        <a href="stocks_ba.html">Boeing</a>
+        <a href="stocks_gd.html">General Dynamics</a>
+        <a href="stocks_lmt.html">Lockheed Martin</a>
+        <a href="stocks_noc.html">Northrop Grumman</a>
+        <a href="stocks_rtx.html">Raytheon Technologies</a>
+        <div class="dropdown">
+            <button class="dropbtn">Case Study
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="stocks_case_study_general_trends.html">General Trends</a>
+                <a href="stocks_case_study_volumes_vs_returns.html">Volumes vs. Returns</a>
+                <a href="stocks_case_study_volatilities.html">Volatilities</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Conclusions
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="stocks_final_analysis.html">Final Analysis</a>
+                <a href="stocks_references.html">References</a>
+            </div>
+        </div>
+      </div>
+
+    <div id="content">
+        <h4>Raytheon Technologies Corporation (RTX) in the Stock Market</h4>
+        <p>
+            The last contractor we will analyze as part of our inquiry is Raytheon Technologies.
+            While it originally started out as the Raytheon Company, it finalized a merger deal with United Technologies in 2020 to bear its current name.
+            Today, it consists of four subsidiaries, Collins Aerospace, Pratt and Whitney, Raytheon Intelligence and Space, and Raytheon Missiles and Defense.
+            Refer to the graphs below to gain insights on how it performed in the stock market from 1985 to 2021, bearing in mind how its stock split upon completing its merger, thereby dividing its original closing price.
+        </p>
+        <h5>Prices</h5>
+        <div id="rtx_historical_prices_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
+        <br>
+        <table>
+            <tr>
+                <td><div id="rtx_greatest_closes_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="rtx_close_shares_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+            </tr>
+        </table>
+        <br>
+        <h5>Returns</h5>
+        <table>
+            <tr>
+                <td><div id="rtx_greatest_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="rtx_annual_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+            </tr>
+        </table>
+        <br>
+        <h5>Volumes</h5>
+        <table>
+            <tr>
+                <td><div id="rtx_volume_shares_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="rtx_greatest_volumes_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

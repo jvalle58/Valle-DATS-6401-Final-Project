@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="final-project-style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATS 6401 - Final Project - Joseph Valle (Boeing)</title>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(GoogleDraw);
+
+        function GoogleDraw() {
+            Drawing('boeing', 'SELECT C,G', BAHistoricalClosingPrices);
+            Drawing('greatest-closes-returns', 'SELECT A,C', BAGreatestCloses);
+            Drawing('shares', 'SELECT A,B', BACloseShares);
+            Drawing('greatest-closes-returns', 'SELECT G,J', BAGreatestReturns);
+            Drawing('annuals', 'SELECT A,C', BAAnnualReturns);
+            Drawing('shares', 'SELECT H,I', BAVolumeShares);
+            Drawing('greatest-volumes', 'SELECT A,B', BAGreatestVolumes);
+        }
+
+        function Drawing(sheet, query, StockVisual){
+            var Selection = encodeURIComponent(query);
+            var query = new google.visualization.Query(
+                'https://docs.google.com/spreadsheets/d/1BlxmZ4Fu3UHgxLBSt1OmNijkEfIoAWXBnZXWpousGeE/gviz/tq?sheet='
+                + sheet + '&headers=1&tq=' + Selection);
+                query.send(StockVisual);
+        }
+
+        function Warning(response){
+            if (response.isError()) {
+                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                return;
+            }
+        }
+
+        function BAHistoricalClosingPrices(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Historical Closing Prices of Boeing Stock from 1985 to 2021',
+                colors: ['purple'],
+                vAxis: {title: 'Closing Price ($)'},
+                hAxis: {title: 'Date'},
+                legend: 'none',
+            };
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, prefix: '$'});
+            formatter.format(data,1);
+
+            var chart = new google.visualization.AreaChart(document.getElementById('ba_historical_prices_div'));
+            chart.draw(data, options);
+        }
+
+        function BAGreatestCloses(response){
+            Warning(response);
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+            var options = {
+                title: 'Greatest Absolute Rises and Declines in Boeing Stock from 1985 to 2021',
+                vAxis: {title: 'Date'},
+                hAxis: {title: 'Change in Closing Price ($)'},
+                colors: ['purple'],
+                legend: 'none',
+            }
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, prefix: '$'});
+                formatter.format(data,1);
+
+            var chart = new google.visualization.BarChart(document.getElementById('ba_greatest_closes_div'));
+            chart.draw(data, options);
+        }
+
+        function BACloseShares(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Frequency Shares of Closing Price Ranges for Boeing Stock from 1985 to 2021',
+                pieHole: 0.35,
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('ba_close_shares_div'));
+            chart.draw(data, options);
+        }
+
+        function BAGreatestReturns(response){
+            Warning(response);
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+            var options = {
+                title: 'Greatest Relative Rises and Declines in Boeing Stock from 1985 to 2021',
+                vAxis: {title: 'Date'},
+                hAxis: {title: 'Daily Return (%)'},
+                colors: ['purple'],
+                legend: 'none',
+            }
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+                formatter.format(data,1);
+
+            var chart = new google.visualization.BarChart(document.getElementById('ba_greatest_returns_div'));
+            chart.draw(data, options);
+        }
+
+        function BAAnnualReturns(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Boeing Annual Returns from 1985 to 2021',
+                vAxis: {title: 'Annual Return (%)'},
+                hAxis: {
+                    title: 'Year',
+                    format: '0000',
+                },
+                colors: ['purple'],
+                lineWidth: 3,
+                legend: 'none',
+            }
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+                formatter.format(data,1);
+
+            var chart = new google.visualization.LineChart(document.getElementById('ba_annual_returns_div'));
+            chart.draw(data, options);
+        }
+
+        function BAVolumeShares(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Frequency Shares of Volume Ranges for Boeing Stock from 1985 to 2021',
+                pieHole: 0.35,
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('ba_volume_shares_div'));
+            chart.draw(data, options);
+        }
+
+        function BAGreatestVolumes(response){
+            Warning(response);
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+            var options = {
+                title: 'Trading Sessions with the Greatest Volumes for Boeing Stock from 1985 to 2021',
+                hAxis: {title: 'Date'},
+                vAxis: {title: 'Volume'},
+                colors: ['purple'],
+                legend: 'none',
+            }
+            var chart = new google.visualization.ColumnChart(document.getElementById('ba_greatest_volumes_div'));
+            chart.draw(data, options);
+        }
+
+    </script>
+       
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div id="logo">
+                <div id="logo_text">
+                    <h1>Defense Contractors in the Stock Market from 1985 to 2021</h1>
+                    <h2></h2>
+                    <h2>DATS 6401 - Joseph Valle</h3>
+                    <h2></h2>
+                    <h3><a href= "https://jvalle58.github.io/Valle-DATS-6401-Final-Project/">GitHub.io Link</a></h3>
+                    <h3></h3>
+                    <h3><a href= "https://github.com/jvalle58/Valle-DATS-6401-Final-Project">GitHub Repository Link</a></h3>
+                    <h3></h3>
+                    <h3><a href= "https://www.w3schools.com/css/css_link.asp">Zenodo Link</a></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar">
+        <a href="stocks_home.html">Home</a>
+        <a href="stocks_ba.html">Boeing</a>
+        <a href="stocks_gd.html">General Dynamics</a>
+        <a href="stocks_lmt.html">Lockheed Martin</a>
+        <a href="stocks_noc.html">Northrop Grumman</a>
+        <a href="stocks_rtx.html">Raytheon Technologies</a>
+        <div class="dropdown">
+            <button class="dropbtn">Case Study
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="stocks_case_study_general_trends.html">General Trends</a>
+                <a href="stocks_case_study_volumes_vs_returns.html">Volumes vs. Returns</a>
+                <a href="stocks_case_study_volatilities.html">Volatilities</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Conclusions
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="stocks_final_analysis.html">Final Analysis</a>
+                <a href="stocks_references.html">References</a>
+            </div>
+        </div>
+      </div>
+
+      <div id="content">
+        <h4>The Boeing Company (BA) in the Stock Market</h4>
+        <p>
+            We first begin our investigation with Boeing (BA).
+            By far, it is the largest of the five in our list in terms of market capitalization, defined as the market price of its stock multiplied by the total number of shares.
+            Given its relatively large position within the stock market, Boeing continues to draw investors over its latest developments in commercial, military, and space aircraft.
+            From a national security standpoint, the latter has especially become more significant upon the establishment of the US Space Force in 2019.
+            You will have the opportunity to evaluate its historical closing prices and annual returns from 1985 to 2021, as well as its most significant absolute and relative changes in its stock over that time.
+            The ten trading sessions exhibiting its highest volumes, along with its frequency shares with respect to certain closing price and volume ranges, are also included.
+        </p>
+        <h5>Prices</h5>
+        <div id="ba_historical_prices_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
+        <br>
+        <table>
+            <tr>
+                <td><div id="ba_greatest_closes_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="ba_close_shares_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+            </tr>
+        </table>
+        <br>
+        <h5>Returns</h5>
+        <table>
+            <tr>
+                <td><div id="ba_greatest_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="ba_annual_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+            </tr>
+        </table>
+        <br>
+        <h5>Volumes</h5>
+        <table>
+            <tr>
+                <td><div id="ba_volume_shares_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="ba_greatest_volumes_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

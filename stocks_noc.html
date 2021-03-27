@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="final-project-style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATS 6401 - Final Project - Joseph Valle (Northrop Grumman)</title>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(GoogleDraw);
+
+        function GoogleDraw() {
+            Drawing('northrop-grumman', 'SELECT C,G', NOCHistoricalClosingPrices);
+            Drawing('greatest-closes-returns', 'SELECT AK,AM', NOCGreatestCloses);
+            Drawing('shares', 'SELECT A,E', NOCCloseShares);
+            Drawing('greatest-closes-returns', 'SELECT AQ,AT', NOCGreatestReturns);
+            Drawing('annuals', 'SELECT M,O', NOCAnnualReturns);
+            Drawing('shares', 'SELECT H,L', NOCVolumeShares);
+            Drawing('greatest-volumes', 'SELECT AN,AO', NOCGreatestVolumes);
+        }
+
+        function Drawing(sheet, query, StockVisual){
+            var Selection = encodeURIComponent(query);
+            var query = new google.visualization.Query(
+                'https://docs.google.com/spreadsheets/d/1BlxmZ4Fu3UHgxLBSt1OmNijkEfIoAWXBnZXWpousGeE/gviz/tq?sheet='
+                + sheet + '&headers=1&tq=' + Selection);
+                query.send(StockVisual);
+        }
+
+        function Warning(response){
+            if (response.isError()) {
+                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                return;
+            }
+        }
+
+        function NOCHistoricalClosingPrices(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Historical Closing Prices of Northrop Grumman Stock from 1985 to 2021',
+                colors: ['#3a5fcd'],
+                vAxis: {title: 'Closing Price ($)'},
+                hAxis: {title: 'Date'},
+                legend: 'none',
+            };
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, prefix: '$'});
+            formatter.format(data,1);
+
+            var chart = new google.visualization.AreaChart(document.getElementById('noc_historical_prices_div'));
+            chart.draw(data, options);
+        }
+
+        function NOCGreatestCloses(response){
+            Warning(response);
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+            var options = {
+                title: 'Greatest Absolute Rises and Declines in Northrop Grumman Stock from 1985 to 2021',
+                vAxis: {title: 'Date'},
+                hAxis: {title: 'Change in Closing Price ($)'},
+                colors: ['#3a5fcd'],
+                legend: 'none',
+            }
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, prefix: '$'});
+                formatter.format(data,1);
+
+            var chart = new google.visualization.BarChart(document.getElementById('noc_greatest_closes_div'));
+            chart.draw(data, options);
+        }
+
+        function NOCCloseShares(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Frequency Shares of Closing Price Ranges for Northrop Grumman Stock from 1985 to 2021',
+                pieHole: 0.35,
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('noc_close_shares_div'));
+            chart.draw(data, options);
+        }
+
+        function NOCGreatestReturns(response){
+            Warning(response);
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+            var options = {
+                title: 'Greatest Relative Rises and Declines in Northrop Grumman Stock from 1985 to 2021',
+                vAxis: {title: 'Date'},
+                hAxis: {title: 'Daily Return (%)'},
+                colors: ['#3a5fcd'],
+                legend: 'none',
+            }
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+                formatter.format(data,1);
+
+            var chart = new google.visualization.BarChart(document.getElementById('noc_greatest_returns_div'));
+            chart.draw(data, options);
+        }
+
+        function NOCAnnualReturns(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Northrop Grumman Annual Returns from 1985 to 2021',
+                vAxis: {title: 'Annual Return (%)'},
+                hAxis: {
+                    title: 'Year',
+                    format: '0000',
+                },
+                colors: ['#3a5fcd'],
+                lineWidth: 3,
+                legend: 'none',
+            }
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+                formatter.format(data,1);
+
+            var chart = new google.visualization.LineChart(document.getElementById('noc_annual_returns_div'));
+            chart.draw(data, options);
+        }
+
+        function NOCVolumeShares(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Frequency Shares of Volume Ranges for Northrop Grumman Stock from 1985 to 2021',
+                pieHole: 0.35,
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('noc_volume_shares_div'));
+            chart.draw(data, options);
+        }
+
+        function NOCGreatestVolumes(response){
+            Warning(response);
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+            var options = {
+                title: 'Trading Sessions with the Greatest Volumes for Northrop Grumman Stock from 1985 to 2021',
+                hAxis: {title: 'Date'},
+                vAxis: {title: 'Volume'},
+                colors: ['#3a5fcd'],
+                legend: 'none',
+            }
+            var chart = new google.visualization.ColumnChart(document.getElementById('noc_greatest_volumes_div'));
+            chart.draw(data, options);
+        }
+
+    </script>
+       
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div id="logo">
+                <div id="logo_text">
+                    <h1>Defense Contractors in the Stock Market from 1985 to 2021</h1>
+                    <h2></h2>
+                    <h2>DATS 6401 - Joseph Valle</h3>
+                    <h2></h2>
+                    <h3><a href= "https://jvalle58.github.io/Valle-DATS-6401-Final-Project/">GitHub.io Link</a></h3>
+                    <h3></h3>
+                    <h3><a href= "https://github.com/jvalle58/Valle-DATS-6401-Final-Project">GitHub Repository Link</a></h3>
+                    <h3></h3>
+                    <h3><a href= "https://www.w3schools.com/css/css_link.asp">Zenodo Link</a></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar">
+        <a href="stocks_home.html">Home</a>
+        <a href="stocks_ba.html">Boeing</a>
+        <a href="stocks_gd.html">General Dynamics</a>
+        <a href="stocks_lmt.html">Lockheed Martin</a>
+        <a href="stocks_noc.html">Northrop Grumman</a>
+        <a href="stocks_rtx.html">Raytheon Technologies</a>
+        <div class="dropdown">
+            <button class="dropbtn">Case Study
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="stocks_case_study_general_trends.html">General Trends</a>
+                <a href="stocks_case_study_volumes_vs_returns.html">Volumes vs. Returns</a>
+                <a href="stocks_case_study_volatilities.html">Volatilities</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Conclusions
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="stocks_final_analysis.html">Final Analysis</a>
+                <a href="stocks_references.html">References</a>
+            </div>
+        </div>
+      </div>
+
+      <div id="content">
+        <h4>Northrop Grumman Corporation (NOC) in the Stock Market</h4>
+        <p>
+            Based in West Falls Church, VA, Northrop Grumman (NOC) has led the development of the B-21 Raider, a strategic stealth bomber capable of delivering precision strikes.
+            The bomber derives its name from a group of volunteers led by Lieutenant Colonel Jimmy Doolittle, termed "Doolittle's Raiders". 
+            Upon the beginning of World War II in the Pacific, these men made it their mission to turn the tide against Japan at the Battle of Midway with their array of bombers.
+            As with the other contractors, this page examines Northrop Grumman's historical closing prices, annual returns, and greatest absolute and relative shifts in price.
+            The days where it traded the most, along with its frequency shares with respect to closing price and volume, have likewise been provided.
+        </p>
+        <h5>Prices</h5>
+        <div id="noc_historical_prices_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
+        <br>
+        <table>
+            <tr>
+                <td><div id="noc_greatest_closes_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="noc_close_shares_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+            </tr>
+        </table>
+        <br>
+        <h5>Returns</h5>
+        <table>
+            <tr>
+                <td><div id="noc_greatest_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="noc_annual_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+            </tr>
+        </table>
+        <br>
+        <h5>Volumes</h5>
+        <table>
+            <tr>
+                <td><div id="noc_volume_shares_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="noc_greatest_volumes_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>
