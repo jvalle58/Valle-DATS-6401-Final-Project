@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="final-project-style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATS 6401 - Final Project - Joseph Valle (Home)</title>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(GoogleDraw);
+
+        function GoogleDraw() {
+            Drawing('sp-500', 'SELECT C,G', SPXHistoricalClosingPrices);
+        }
+
+        function Drawing(sheet, query, StockVisual){
+            var Selection = encodeURIComponent(query);
+            var query = new google.visualization.Query(
+                'https://docs.google.com/spreadsheets/d/1BlxmZ4Fu3UHgxLBSt1OmNijkEfIoAWXBnZXWpousGeE/gviz/tq?sheet='
+                + sheet + '&headers=1&tq=' + Selection);
+                query.send(StockVisual);
+        }
+
+        function Warning(response){
+            if (response.isError()) {
+                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                return;
+            }
+        }
+
+        function SPXHistoricalClosingPrices(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Historical Closing Prices of the S&P 500 Index from 1985 to 2021',
+                colors: ['green'],
+                vAxis: {title: 'Closing Price ($)'},
+                hAxis: {title: 'Date'},
+                legend: 'none',
+            };
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, prefix: '$'});
+            formatter.format(data,1);
+
+            var chart = new google.visualization.AreaChart(document.getElementById('spx_historical_prices_div'));
+            chart.draw(data, options);
+        }
+
+    </script>
+       
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div id="logo">
+                <div id="logo_text">
+                    <h1>Defense Contractors in the Stock Market from 1985 to 2021</h1>
+                    <h2></h2>
+                    <h2>DATS 6401 - Joseph Valle</h3>
+                    <h2></h2>
+                    <h3><a href= "https://jvalle58.github.io/Valle-DATS-6401-Final-Project/">GitHub Link</a></h3>
+                    <h3></h3>
+                    <h3><a href= "https://www.w3schools.com/css/css_link.asp">Zenodo Link</a></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="stocks_ba.html">Boeing</a>
+        <a href="stocks_gd.html">General Dynamics</a>
+        <a href="stocks_lmt.html">Lockheed Martin</a>
+        <a href="stocks_noc.html">Northrop Grumman</a>
+        <a href="stocks_rtx.html">Raytheon Technologies</a>
+        <div class="dropdown">
+            <button class="dropbtn">Case Study
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="stocks_case_study_general_trends.html">General Trends</a>
+                <a href="stocks_case_study_volumes_vs_returns.html">Volumes vs. Returns</a>
+                <a href="stocks_case_study_volatilities.html">Volatilities</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Conclusions
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="stocks_final_analysis.html">Final Analysis</a>
+                <a href="stocks_references.html">References</a>
+            </div>
+        </div>
+      </div>
+
+    <div id="content">
+        <h4>Welcome!</h4>
+        <p> 
+            You have arrived at a visual presentation analyzing the tendencies of the United States' five largest defense contractors within the stock market from 1985 to 2021.
+            The contractors we will examine are The Boeing Company (BA), General Dynamics Corporation (GD), Lockheed Martin Corporation (LMT), Northrop Grumman Corporation (NOC), and Raytheon Technologies Corporation (RTX).
+            These have drawn signficant attention among investors considering how they have recently reported the highest arms revenues of all contractors in the US.
+            In extension, as the US consistently spends more on its military in absolute terms than all other countries around the world, much of these discretionary funds are allocated toward research and development within the aforementioned contractors, which possess significant lobbying leverage.
+            Hence, contractors have assumed a considerable share of many investors' portfolios.
+            Notably, according to the Fortune 500 list of companies for 2020, the aforementioned five placed within the top 100 of that year.
+        </p>
+        <p>
+            For a little background, let us take a look at the S&P 500 Index from 1985 to 2021.  
+            While perusing this presentation, consider how the contractors may respond to the S&P 500's shifts over time.
+            For all contractors and the S&P 500, the particular data for this presentation covers prices from January 2, 1985 to March 19, 2021.
+        </p>
+        <div id="spx_historical_prices_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
+        <br>
+        <p>
+            While the stock market not surprisingly is a significantly more volatile environment to invest in than the bond market, its higher risks come with potentially higher rewards, especially for investors who hold on to their stocks in the long run.
+            Over the course of this presentation, you will have the opportunity to view any contractor's trends with respect to price, return, and volume.
+            The navigation bar above likewise gives you the option to view a more in-depth comparison of the contractors under the Case Study tab, with several options investigating them at different angles available.
+        </p>
+        <p>
+            References for this presentation are included under its corresponding option within the Conclusions tab.
+            To visit the accompanying publications on GitHub or Zenodo, click on their respective links provided in the header.
+        </p>
+    </div>
+
+</body>
+</html>
