@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="final-project-style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATS 6401 - Final Project - Joseph Valle (Case Study: General Trends)</title>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(GoogleDraw);
+
+        function GoogleDraw() {
+            Drawing('annuals-transposed', 'SELECT A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF,AG,AH,AI,AJ,AK,AL,AM', CompareAnnualReturn);
+            Drawing('averages', 'SELECT A,B', AverageClosingPrice);
+            Drawing('averages', 'SELECT G,H', AverageDailyVolume);
+        }
+
+        function Drawing(sheet, query, StockVisual){
+            var Selection = encodeURIComponent(query);
+            var query = new google.visualization.Query(
+                'https://docs.google.com/spreadsheets/d/1BlxmZ4Fu3UHgxLBSt1OmNijkEfIoAWXBnZXWpousGeE/gviz/tq?sheet='
+                + sheet + '&headers=1&tq=' + Selection);
+                query.send(StockVisual);
+        }
+
+        function Warning(response){
+            if (response.isError()) {
+                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                return;
+            }
+        }
+
+        function CompareAnnualReturn(response){
+            Warning(response);
+            var data = response.getDataTable();
+            data.sort({column: 38, desc: true});
+            var options = {
+                title: 'Comparing Annual Returns of Defense Contractors from 1985 to 2021',
+                hAxis: {title: 'Ticker'},
+                vAxis: {title: 'Return (%)'},
+                seriesType: 'bars',
+                series: {
+                    37: {
+                        type:'line',
+                        pointsVisible: true,
+                        pointSize: 8,
+                    },
+                    0: {color: '#ee1289'},
+                    1: {color: '#ee1289'},
+                    2: {color: '#ee1289'},
+                    3: {color: '#ee1289'},
+                    4: {color: '#ee1289'},
+                    5: {color: '#ee1289'},
+                    6: {color: '#ee1289'},
+                    7: {color: '#ee1289'},
+                    8: {color: '#ee1289'},
+                    9: {color: '#ee1289'},
+                    10: {color: '#ee1289'},
+                    11: {color: '#ee1289'},
+                    12: {color: '#ee1289'},
+                    13: {color: '#ee1289'},
+                    14: {color: '#ee1289'},
+                    15: {color: '#ee1289'},
+                    16: {color: '#ee1289'},
+                    17: {color: '#ee1289'},
+                    18: {color: '#ee1289'},
+                    19: {color: '#ee1289'},
+                    20: {color: '#ee1289'},
+                    21: {color: '#ee1289'},
+                    22: {color: '#ee1289'},
+                    23: {color: '#ee1289'},
+                    24: {color: '#ee1289'},
+                    25: {color: '#ee1289'},
+                    26: {color: '#ee1289'},
+                    27: {color: '#ee1289'},
+                    28: {color: '#ee1289'},
+                    29: {color: '#ee1289'},
+                    30: {color: '#ee1289'},
+                    31: {color: '#ee1289'},
+                    32: {color: '#ee1289'},
+                    33: {color: '#ee1289'},
+                    34: {color: '#ee1289'},
+                    35: {color: '#ee1289'},
+                    36: {color: '#ee1289'},
+                },
+                colors: ['green'],
+                bar: {groupWidth: 146},
+                lineWidth: 4,
+                legend: 'none',
+            };
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+            formatter.format(data,1);
+            formatter.format(data,2);
+            formatter.format(data,3);
+            formatter.format(data,4);
+            formatter.format(data,5);
+            formatter.format(data,6);
+            formatter.format(data,7);
+            formatter.format(data,8);
+            formatter.format(data,9);
+            formatter.format(data,10);
+            formatter.format(data,11);
+            formatter.format(data,12);
+            formatter.format(data,13);
+            formatter.format(data,14);
+            formatter.format(data,15);
+            formatter.format(data,16);
+            formatter.format(data,17);
+            formatter.format(data,18);
+            formatter.format(data,19);
+            formatter.format(data,20);
+            formatter.format(data,21);
+            formatter.format(data,22);
+            formatter.format(data,23);
+            formatter.format(data,24);
+            formatter.format(data,25);
+            formatter.format(data,26);
+            formatter.format(data,27);
+            formatter.format(data,28);
+            formatter.format(data,29);
+            formatter.format(data,30);
+            formatter.format(data,31);
+            formatter.format(data,32);
+            formatter.format(data,33);
+            formatter.format(data,34);
+            formatter.format(data,35);
+            formatter.format(data,36);
+            formatter.format(data,37);
+            formatter.format(data,38);
+
+            var chart = new google.visualization.ComboChart(document.getElementById('compare_annual_return_div'));
+            chart.draw(data, options);
+        }
+
+        function AverageClosingPrice(response){
+            Warning(response);
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+            var options = {
+                title: 'Average Closing Prices of Defense Contractors from 1985 to 2021',
+                vAxis: {title: 'Ticker'},
+                hAxis: {title: 'Closing Price ($)'},
+                bars: 'horizontal',
+                colors: ['#ee1289'],
+                legend: 'none',
+            };
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, prefix: '$'});
+            formatter.format(data,1);
+
+            var chart = new google.visualization.BarChart(document.getElementById('average_closing_price_div'));
+            chart.draw(data, options);
+        }
+
+        function AverageDailyVolume(response){
+            Warning(response);
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+            var options = {
+                title: 'Average Daily Volumes of Defense Contractors from 1985 to 2021',
+                vAxis: {title: 'Ticker'},
+                hAxis: {title: 'Volume'},
+                bars: 'horizontal',
+                colors: ['green'],
+                legend: 'none',
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('average_daily_volume_div'));
+            chart.draw(data, options);
+        }
+
+    </script>
+    
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div id="logo">
+                <div id="logo_text">
+                    <h1>Defense Contractors in the Stock Market from 1985 to 2021</h1>
+                    <h2></h2>
+                    <h2>DATS 6401 - Joseph Valle</h3>
+                    <h2></h2>
+                    <h3><a href= "https://jvalle58.github.io/Valle-DATS-6401-Final-Project/">GitHub Link</a></h3>
+                    <h3></h3>
+                    <h3><a href= "https://www.w3schools.com/css/css_link.asp">Zenodo Link</a></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar">
+        <a href="stocks_home.html">Home</a>
+        <a href="stocks_ba.html">Boeing</a>
+        <a href="stocks_gd.html">General Dynamics</a>
+        <a href="stocks_lmt.html">Lockheed Martin</a>
+        <a href="stocks_noc.html">Northrop Grumman</a>
+        <a href="stocks_rtx.html">Raytheon Technologies</a>
+        <div class="dropdown">
+            <button class="dropbtn">Case Study
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="stocks_case_study_general_trends.html">General Trends</a>
+                <a href="stocks_case_study_volumes_vs_returns.html">Volumes vs. Returns</a>
+                <a href="stocks_case_study_volatilities.html">Volatilities</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Conclusions
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="stocks_final_analysis.html">Final Analysis</a>
+                <a href="stocks_references.html">References</a>
+            </div>
+        </div>
+      </div>
+
+    <div id="content">
+        <h4>Case Study: A Preliminary Side-By-Side Analysis of the Contractors</h4>
+        <p>
+            So far in our presentation, we have dived into the individual contractors' tendencies with respect to price, return, and volume.
+            However, what if we want to conduct a more in-depth investigation on these trends jointly?
+        </p>
+        <p>
+            We have now arrived at a case study of the five contractors from 1985 to 2021.
+            To begin, let's evaluate the contractors' annual returns, but from a different perspective.
+            As mentioned earlier, a stock's annual return is calculated as the relative change from its first opening price to its last closing one within the same year.
+            Applying this definition, we can determine which contractors performed better as investments over time.
+            We should also take the time to compare their average closing prices and volumes on a daily basis.
+        </p>
+        <br>
+        <h5>Annual and Average Returns</h5>
+        <div id="compare_annual_return_div" style="width: 1150px; height: 550px; display: block; margin: 0 auto;"></div>
+        <br>
+        <p>
+            The combo chart above reports the contractors' annual returns from 1985 to 2021 and sorts them by their means.
+            Notably, while General Dynamics in 1991 reported the highest annual return (110.78%) for any year within our time span, it placed third among the stocks for its mean annual return on its investment (12.05%).
+            Boeing (14.24%) and Lockheed Martin (12.29%) posted higher mean returns.
+            Note as well how despite the fact that Raytheon Technologies returned the lowest on average (11.44%), it actually dropped in its investment for fewer years than the others. 
+        </p>
+        <br>
+        <h5>Average Closing Prices and Daily Volumes</h5>
+        <table>
+            <tr>
+                <td><div id="average_closing_price_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="average_daily_volume_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+            </tr>
+        </table>
+        <br>
+        <p>
+            Clearly, a stock's average closing price or volume does not necessarily correlate with its average annual return.
+            This discrepancy is clear when comparing Boeing and Lockheed Martin, as the latter closed on average at a higher price daily but returned less on average annually.
+            In addition, while Raytheon Technologies offered the lowest annual return from 1985 to 2021, and closed on average lower than the other contractors, its average daily volume was the highest.
+            This suggests that its stock is relatively more liquid, allowing its investors to trade more frequently throughout the day.
+            Furthermore, any news about its financial status, positive or negative, are likely to have a more significant effect on its price than the others.
+        </p>
+    </div>
+
+</body>
+</html>

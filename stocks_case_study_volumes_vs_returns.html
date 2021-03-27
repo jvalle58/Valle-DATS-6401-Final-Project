@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="final-project-style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATS 6401 - Final Project - Joseph Valle (Case Study: Volumes vs. Returns)</title>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(GoogleDraw);
+
+        function GoogleDraw() {
+            Drawing('boeing', 'SELECT H,J', BAVolumeReturn);
+            Drawing('general-dynamics', 'SELECT H,J', GDVolumeReturn);
+            Drawing('lockheed-martin', 'SELECT H,J', LMTVolumeReturn);
+            Drawing('northrop-grumman', 'SELECT H,J', NOCVolumeReturn);
+            Drawing('raytheon-technologies', 'SELECT H,J', RTXVolumeReturn);
+            Drawing('greatest-volumes', 'SELECT G,J,I,L,H', BABubble);
+            Drawing('greatest-volumes', 'SELECT T,W,V,Y,U', GDBubble);
+            Drawing('greatest-volumes', 'SELECT AG,AJ,AI,AL,AH', LMTBubble);
+            Drawing('greatest-volumes', 'SELECT AT,AW,AV,AY,AU', NOCBubble);
+            Drawing('greatest-volumes', 'SELECT BG,BJ,BI,BL,BH', RTXBubble);
+        }
+
+        function Drawing(sheet, query, StockVisual){
+            var Selection = encodeURIComponent(query);
+            var query = new google.visualization.Query(
+                'https://docs.google.com/spreadsheets/d/1BlxmZ4Fu3UHgxLBSt1OmNijkEfIoAWXBnZXWpousGeE/gviz/tq?sheet='
+                + sheet + '&headers=1&tq=' + Selection);
+                query.send(StockVisual);
+        }
+
+        function Warning(response){
+            if (response.isError()) {
+                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                return;
+            }
+        }
+
+        function BAVolumeReturn(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Volume vs. Return for Boeing from 1985 to 2021',
+                hAxis: {title: 'Volume'},
+                vAxis: {title: 'Return (%)'},
+                colors: ['purple'],
+                legend: 'none',
+            };
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+            formatter.format(data,1);
+            var chart = new google.visualization.ScatterChart(document.getElementById('ba_volume_return_div'));
+            chart.draw(data, options);
+        } 
+
+        function BABubble(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Boeing: Analyzing the Greatest Relative Rises in Volume with their Accompanying Returns',
+                vAxis: {title: 'Return (%)'},
+                hAxis: {title: 'Relative Change in Volume (%)'},
+                colors: ['green','#cd2626'],
+                bubble: {
+                    textStyle: {fontSize: 10,
+                    auraColor: 'none',
+                    }
+                }
+            }
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+                formatter.format(data,1);
+                formatter.format(data,2);
+
+            var chart = new google.visualization.BubbleChart(document.getElementById('ba_bubble_div'));
+            chart.draw(data, options);
+        }
+
+        function GDVolumeReturn(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Volume vs. Return for General Dynamics from 1985 to 2021',
+                hAxis: {title: 'Volume'},
+                vAxis: {title: 'Return (%)'},
+                colors: ['gray'],
+                legend: 'none',
+            };
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+            formatter.format(data,1);
+            var chart = new google.visualization.ScatterChart(document.getElementById('gd_volume_return_div'));
+            chart.draw(data, options);
+        } 
+
+        function GDBubble(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'General Dynamics: Analyzing the Greatest Relative Rises in Volume with their Accompanying Returns',
+                vAxis: {title: 'Return (%)'},
+                hAxis: {title: 'Relative Change in Volume (%)'},
+                colors: ['#cd2626','green'],
+                bubble: {
+                    textStyle: {fontSize: 10,
+                    auraColor: 'none',
+                    }
+                }
+            }
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+                formatter.format(data,1);
+                formatter.format(data,2);
+
+            var chart = new google.visualization.BubbleChart(document.getElementById('gd_bubble_div'));
+            chart.draw(data, options);
+        }
+
+        function LMTVolumeReturn(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Volume vs. Return for Lockheed Martin from 1985 to 2021',
+                hAxis: {title: 'Volume'},
+                vAxis: {title: 'Return (%)'},
+                colors: ['#fd6a00'],
+                legend: 'none',
+            };
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+            formatter.format(data,1);
+            var chart = new google.visualization.ScatterChart(document.getElementById('lmt_volume_return_div'));
+            chart.draw(data, options);
+        } 
+
+        function LMTBubble(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Lockheed Martin: Analyzing the Greatest Relative Rises in Volume with their Accompanying Returns',
+                vAxis: {title: 'Return (%)'},
+                hAxis: {title: 'Relative Change in Volume (%)'},
+                colors: ['#cd2626','green'],
+                bubble: {
+                    textStyle: {fontSize: 10,
+                    auraColor: 'none',
+                    }
+                }
+            }
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+                formatter.format(data,1);
+                formatter.format(data,2);
+
+            var chart = new google.visualization.BubbleChart(document.getElementById('lmt_bubble_div'));
+            chart.draw(data, options);
+        }
+
+        function NOCVolumeReturn(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Volume vs. Return for Northrop Grumman from 1985 to 2021',
+                hAxis: {title: 'Volume'},
+                vAxis: {title: 'Return (%)'},
+                colors: ['#3a5fcd'],
+                legend: 'none',
+            };
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+            formatter.format(data,1);
+            var chart = new google.visualization.ScatterChart(document.getElementById('noc_volume_return_div'));
+            chart.draw(data, options);
+        } 
+
+        function NOCBubble(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Northrop Grumman: Analyzing the Greatest Relative Rises in Volume with their Accompanying Returns',
+                vAxis: {title: 'Return (%)'},
+                hAxis: {title: 'Relative Change in Volume (%)'},
+                colors: ['#cd2626','green'],
+                bubble: {
+                    textStyle: {fontSize: 10,
+                    auraColor: 'none',
+                    }
+                }
+            }
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+                formatter.format(data,1);
+                formatter.format(data,2);
+
+            var chart = new google.visualization.BubbleChart(document.getElementById('noc_bubble_div'));
+            chart.draw(data, options);
+        }
+
+        function RTXVolumeReturn(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Volume vs. Return for Raytheon Technologies from 1985 to 2021',
+                hAxis: {title: 'Volume'},
+                vAxis: {title: 'Return (%)'},
+                colors: ['#cd2626'],
+                legend: 'none',
+            };
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+            formatter.format(data,1);
+            var chart = new google.visualization.ScatterChart(document.getElementById('rtx_volume_return_div'));
+            chart.draw(data, options);
+        } 
+
+        function RTXBubble(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'Raytheon Technologies: Analyzing the Greatest Relative Rises in Volume with their Accompanying Returns',
+                vAxis: {title: 'Return (%)'},
+                hAxis: {title: 'Relative Change in Volume (%)'},
+                colors: ['green','#cd2626'],
+                bubble: {
+                    textStyle: {fontSize: 10,
+                    auraColor: 'none',
+                    }
+                }
+            }
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+                formatter.format(data,1);
+                formatter.format(data,2);
+
+            var chart = new google.visualization.BubbleChart(document.getElementById('rtx_bubble_div'));
+            chart.draw(data, options);
+        }
+
+    </script>
+    
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div id="logo">
+                <div id="logo_text">
+                    <h1>Defense Contractors in the Stock Market from 1985 to 2021</h1>
+                    <h2></h2>
+                    <h2>DATS 6401 - Joseph Valle</h3>
+                    <h2></h2>
+                    <h3><a href= "https://jvalle58.github.io/Valle-DATS-6401-Final-Project/">GitHub Link</a></h3>
+                    <h3></h3>
+                    <h3><a href= "https://www.w3schools.com/css/css_link.asp">Zenodo Link</a></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar">
+        <a href="stocks_home.html">Home</a>
+        <a href="stocks_ba.html">Boeing</a>
+        <a href="stocks_gd.html">General Dynamics</a>
+        <a href="stocks_lmt.html">Lockheed Martin</a>
+        <a href="stocks_noc.html">Northrop Grumman</a>
+        <a href="stocks_rtx.html">Raytheon Technologies</a>
+        <div class="dropdown">
+            <button class="dropbtn">Case Study
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="stocks_case_study_general_trends.html">General Trends</a>
+                <a href="stocks_case_study_volumes_vs_returns.html">Volumes vs. Returns</a>
+                <a href="stocks_case_study_volatilities.html">Volatilities</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Conclusions
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="stocks_final_analysis.html">Final Analysis</a>
+                <a href="stocks_references.html">References</a>
+            </div>
+        </div>
+      </div>
+
+    <div id="content">
+        <h4>Case Study: Examining the Relationship between Volume and Return</h4>
+        <p>
+            In this section of our case study, we now turn toward studying the relationship between volume and return among the contractors.
+            But before we do so though, we should first take the time to discuss the efficient market hypothesis.
+        </p>
+        <p>
+            The efficient market hypothesis states that all of a stock's information is already freely available in public for investors.
+            By extension, a stock's price would reflect all such information, and no investor would possess an unfair advantage while trading.
+            Information includes corporate news related to a contractor's financial status, or any recent project completed, with positive or negative consequences for its investment.
+            That being said, it is inordinately hard to quickly find out everything about a stock in the process of deciding whether or not to buy it.
+            This is why we often hear how difficult it is for an investor to "beat the market."
+            While the merits of the efficient market hypothesis are still debated to this day, on account of the economy's relative turbulence and the impact of asymmetric information, it continues to play some role in how investors trade.
+        </p>
+        <p>
+            In the context of the relationship between volume and return, it is probable that significant news will encourage investors to trade a stock more often than normal.
+            The ramifications of such a rise in trades can play both ways on a stock's return.
+        </p>
+        <p>
+            Besides reporting on the relationship between volume and return on a daily basis, we can take our inquiry even further and isolate for each contractor the ten trading sessions where their volumes rose the highest in relative terms.
+            We can evaluate the effect these ten events exert on their corresponding daily returns, and simultaneously print their accompanying number of trades conducted.
+            The contractors are listed in alphabetical order for your convenience below.
+        </p>
+        <br>
+        <h5>Boeing</h5>
+        <table>
+            <tr>
+                <td><div id="ba_volume_return_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="ba_bubble_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+            </tr>
+        </table>
+        <h5>General Dynamics</h5>
+        <br>
+        <table>
+            <tr>
+                <td><div id="gd_volume_return_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="gd_bubble_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+            </tr>
+        </table>
+        <br>
+        <h5>Lockheed Martin</h5>
+        <table>
+            <tr>
+                <td><div id="lmt_volume_return_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="lmt_bubble_div" style="width: 570px; height: 550px; display: block; margin: 0 auto;"></div></td>
+            </tr>
+        </table>
+        <br>
+        <h5>Northrop Grumman</h5>
+        <table>
+            <tr>
+                <td><div id="noc_volume_return_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="noc_bubble_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+            </tr>
+        </table>
+        <br>
+        <h5>Raytheon Technologies</h5>
+        <table>
+            <tr>
+                <td><div id="rtx_volume_return_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="rtx_bubble_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+            </tr>
+        </table>
+        <br>
+        <p>
+            When comparing the stocks in terms of their daily relationship between volume and return, we should note how the returns' variability expands as volume rises.
+            In other words, a stock is more likely to offer a return that is extremely high or low on days where it witnesses a notably high number of trades.
+            Yet, three contractors - General Dynamics, Lockheed Martin, and Northrop Grumman - do not frequently report volumes greater than 20 million.
+            If we examine the latter even further however, we can see how on days where volume is about 10 million or higher, there is some decline in return.
+            Hence, on the days where Northrop Grumman traded the most, more often than not these were accompanied by drops in its stock's closing price.
+            Going a step further, we can deduce there is overall somewhat of a negative correlation between volume and return for Northrop Grumman.
+            As for General Dynamics and Lockheed Martin, these each posted only one day where trades exceeded 20 million.
+        </p>
+        <p>
+            The divergence between returns as volume grows becomes even more evident when we turn to Boeing and Raytheon Technologies.
+            Recall as well from the previous section that these two contractors posted the highest daily volumes from 1985 to 2021.
+            The former note implies that any news involving either of these stocks tends to have a greater impact on their daily returns.
+            It is also suggestive of their relatively higher volatility, which will be discussed in greater detail in the final section of our case study.
+        </p>
+        <p>
+            The bubble charts on the right indicate the days with the greatest relative rises in volume for the contractors.
+            A green bubble represents a gain in the daily return, while a red one indicates otherwise.
+            The size of a bubble is determined by the volume reported for a day.
+            Notably, for eight of the days where Boeing's volume rose significantly from the previous trading session, it posted a loss on its return.
+            In particular, on December 2, 1998, while its volume increased by 889.44%, its closing price dropped by 16.56%.
+            This suggests that substantial rises in volume tend to witness investors selling off their shares.
+            Under the laws of supply and demand, such a transition hints at a leftward shift in demand. 
+        </p>
+        <p>
+            In contrast, the relationship between the relative rise in volume and the daily return is somewhat more balanced for the other four contractors.
+            Significant increases in volume for these stocks may be less suggestive of changes in investors' expectations on their returns.
+            As an extension, shifts in demand are likely to be less significant amid higher trades.
+            Intriguingly, General Dynamics on March 13, 1991 simultaneously reported its greatest relative increase in volume (2172.22%) and its greatest daily return (20%) over our time span.
+            In Northrop Grumman's case, for seven of the days where its volume rose the most, it reported a gain on its return.
+        </p>
+    </div>
+
+</body>
+</html>
