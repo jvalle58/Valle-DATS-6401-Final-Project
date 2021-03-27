@@ -9,3 +9,5 @@ Sources for data:
 - S&P 500: https://www.wsj.com/market-data/quotes/index/SPX/historical-prices
 
 Timeline for data: January 2, 1985 - March 19, 2021
+
+Link to Google Sheets data: https://docs.google.com/spreadsheets/d/1BlxmZ4Fu3UHgxLBSt1OmNijkEfIoAWXBnZXWpousGeE/edit#gid=561069532
