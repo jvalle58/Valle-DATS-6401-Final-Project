@@ -12,7 +12,8 @@
         google.charts.setOnLoadCallback(GoogleDraw);
 
         function GoogleDraw() {
-            Drawing('contractors-annuals-transposed', 'SELECT A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF,AG,AH,AI,AJ,AK,AL,AM', CompareAnnualReturn);
+            Drawing('contractors-annuals-transposed', 'SELECT A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF,AG,AH,AI,AJ,AK,AL,AM', ContractorAnnualReturn);
+            Drawing('all-annuals-transposed', 'SELECT A, AM', AverageAnnualReturn)
             Drawing('averages', 'SELECT A,B', AverageClosingPrice);
             Drawing('averages', 'SELECT G,H', AverageDailyVolume);
         }
@@ -32,7 +33,7 @@
             }
         }
 
-        function CompareAnnualReturn(response){
+        function ContractorAnnualReturn(response){
             Warning(response);
             var data = response.getDataTable();
             data.sort({column: 38, desc: true});
@@ -131,7 +132,26 @@
             formatter.format(data,37);
             formatter.format(data,38);
 
-            var chart = new google.visualization.ComboChart(document.getElementById('compare_annual_return_div'));
+            var chart = new google.visualization.ComboChart(document.getElementById('contractor_annual_return_div'));
+            chart.draw(data, options);
+        }
+
+        function AverageAnnualReturn(response){
+            Warning(response);
+            var data = response.getDataTable();
+            data.sort({column: 1, desc: true});
+            var options = {
+                title: 'Comparing Average Annual Returns of Defense Contractors and the S&P 500 from 1985 to 2021',
+                vAxis: {title: 'Return (%)'},
+                hAxis: {title: 'Ticker'},
+                colors: ['#20b2aa'],
+                legend: 'none',
+            };
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+            formatter.format(data,1);
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('average_annual_return_div'));
             chart.draw(data, options);
         }
 
@@ -223,7 +243,7 @@
       </div>
 
     <div id="content">
-        <h4>Case Study: A Preliminary Side-By-Side Analysis of the Contractors</h4>
+        <h4>Case Study: A Preliminary Side-By-Side Analysis</h4>
         <p>
             So far in our presentation, we have dived into the individual contractors' tendencies with respect to price, return, and volume.
             However, what if we want to conduct a more in-depth investigation on these trends jointly?
@@ -232,18 +252,21 @@
             We have now arrived at a case study of the five contractors from 1985 to 2021.
             To begin, let's evaluate the contractors' annual returns, but from a different perspective.
             As mentioned earlier, a stock's annual return is calculated as the relative change from its first opening price to its last closing one within the same year.
-            Applying this definition, we can determine which contractors performed better as investments over time.
-            We should also take the time to compare their average closing prices and volumes on a daily basis.
+            Applying this definition, we can determine which contractors performed better as investments, and compare their average annual returns with the S&P 500.
+            We should also take the time to calculate the stocks' average closing prices and volumes throughout our time span.
         </p>
         <br>
         <h5>Annual and Average Returns</h5>
-        <div id="compare_annual_return_div" style="width: 1150px; height: 550px; display: block; margin: 0 auto;"></div>
+        <div id="contractor_annual_return_div" style="width: 1150px; height: 550px; display: block; margin: 0 auto;"></div>
+        <br>
+        <div id="average_annual_return_div" style="width: 1150px; height: 550px; display: block; margin: 0 auto;"></div>
         <br>
         <p>
             The combo chart above reports the contractors' annual returns from 1985 to 2021 and sorts them by their means.
             Notably, while General Dynamics in 1991 reported the highest annual return (110.78%) for any year within our time span, it placed third among the stocks for its mean annual return on its investment (12.05%).
             Boeing (14.24%) and Lockheed Martin (12.29%) posted higher mean returns.
             Note as well how despite the fact that Raytheon Technologies returned the lowest on average (11.44%), it actually dropped in its investment for fewer years than the others. 
+            In extension, as shown in the column chart, all of the contractors outperformed the S&P 500 (10.07%) on average annually. 
         </p>
         <br>
         <h5>Average Closing Prices and Daily Volumes</h5>
