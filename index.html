@@ -13,6 +13,7 @@
 
         function GoogleDraw() {
             Drawing('sp-500', 'SELECT C,G', SPXHistoricalClosingPrices);
+            Drawing('annuals', 'SELECT U,W', SPXAnnualReturns);
         }
 
         function Drawing(sheet, query, StockVisual){
@@ -45,6 +46,28 @@
             formatter.format(data,1);
 
             var chart = new google.visualization.AreaChart(document.getElementById('spx_historical_prices_div'));
+            chart.draw(data, options);
+        }
+        
+        function SPXAnnualReturns(response){
+            Warning(response);
+            var data = response.getDataTable();
+            var options = {
+                title: 'S&P 500 Annual Returns from 1985 to 2021',
+                vAxis: {title: 'Annual Return (%)'},
+                hAxis: {
+                    title: 'Year',
+                    format: '0000',
+                },
+                colors: ['green'],
+                lineWidth: 3,
+                legend: 'none',
+            }
+            var formatter = new google.visualization.NumberFormat({
+                fractionDigits: 2, suffix: '%'});
+                formatter.format(data,1);
+
+            var chart = new google.visualization.LineChart(document.getElementById('spx_annual_returns_div'));
             chart.draw(data, options);
         }
 
@@ -114,6 +137,8 @@
             For all contractors and the S&P 500, the particular data for this presentation covers prices from January 2, 1985 to March 19, 2021.
         </p>
         <div id="spx_historical_prices_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
+        <br>
+        <div id="spx_annual_returns_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
         <br>
         <p>
             While the stock market not surprisingly is a significantly more volatile environment to invest in than the bond market, its higher risks come with potentially higher rewards, especially for investors who hold on to their stocks in the long run.
