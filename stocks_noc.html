@@ -12,13 +12,13 @@
         google.charts.setOnLoadCallback(GoogleDraw);
 
         function GoogleDraw() {
-            Drawing('northrop-grumman', 'SELECT C,G', NOCHistoricalClosingPrices);
-            Drawing('greatest-closes-returns', 'SELECT AK,AM', NOCGreatestCloses);
-            Drawing('shares', 'SELECT A,E', NOCCloseShares);
-            Drawing('greatest-closes-returns', 'SELECT AQ,AT', NOCGreatestReturns);
-            Drawing('annuals', 'SELECT M,O', NOCAnnualReturns);
-            Drawing('shares', 'SELECT H,L', NOCVolumeShares);
-            Drawing('greatest-volumes', 'SELECT AN,AO', NOCGreatestVolumes);
+            Drawing('northrop-grumman', 'SELECT C,G', NOCHistoricalClosingPrices); // Northrop Grumman historical closing prices from 1985 to 2021
+            Drawing('greatest-closes-returns', 'SELECT AK,AM', NOCGreatestCloses); // Greatest absolute changes in Northrop Grumman stock
+            Drawing('shares', 'SELECT A,E', NOCCloseShares); // Frequency breakdowns of certain closing price ranges for Northrop Grumman
+            Drawing('greatest-closes-returns', 'SELECT AQ,AT', NOCGreatestReturns); // Greatest relative changes in Northrop Grumman stock
+            Drawing('annuals', 'SELECT M,O', NOCAnnualReturns); // Northrop Grumman annual returns from 1985 to 2021
+            Drawing('shares', 'SELECT H,L', NOCVolumeShares); // Frequency breakdowns of certain volume ranges for Northrop Grumman
+            Drawing('greatest-volumes', 'SELECT AN,AO', NOCGreatestVolumes); // Ten greatest volumes posted by Northrop Grumman
         }
 
         function Drawing(sheet, query, StockVisual){
@@ -41,7 +41,7 @@
             var data = response.getDataTable();
             var options = {
                 title: 'Historical Closing Prices of Northrop Grumman Stock from 1985 to 2021',
-                colors: ['#3a5fcd'],
+                colors: ['#3a5fcd'], // #3A5FCD will be the primary color of reference for Northrop Grumman in this project.
                 vAxis: {title: 'Closing Price ($)'},
                 hAxis: {title: 'Date'},
                 legend: 'none',
@@ -167,7 +167,7 @@
                     <h3></h3>
                     <h3><a href= "https://github.com/jvalle58/Valle-DATS-6401-Final-Project">GitHub Repository Link</a></h3>
                     <h3></h3>
-                    <h3><a href= "https://www.w3schools.com/css/css_link.asp">Zenodo Link</a></h3>
+                    <h3><a href= "https://zenodo.org/">Zenodo Link</a></h3>
                 </div>
             </div>
         </div>
