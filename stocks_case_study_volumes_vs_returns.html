@@ -12,16 +12,16 @@
         google.charts.setOnLoadCallback(GoogleDraw);
 
         function GoogleDraw() {
-            Drawing('boeing', 'SELECT H,J', BAVolumeReturn);
-            Drawing('general-dynamics', 'SELECT H,J', GDVolumeReturn);
-            Drawing('lockheed-martin', 'SELECT H,J', LMTVolumeReturn);
-            Drawing('northrop-grumman', 'SELECT H,J', NOCVolumeReturn);
-            Drawing('raytheon-technologies', 'SELECT H,J', RTXVolumeReturn);
-            Drawing('greatest-volumes', 'SELECT G,J,I,L,H', BABubble);
-            Drawing('greatest-volumes', 'SELECT T,W,V,Y,U', GDBubble);
-            Drawing('greatest-volumes', 'SELECT AG,AJ,AI,AL,AH', LMTBubble);
-            Drawing('greatest-volumes', 'SELECT AT,AW,AV,AY,AU', NOCBubble);
-            Drawing('greatest-volumes', 'SELECT BG,BJ,BI,BL,BH', RTXBubble);
+            Drawing('boeing', 'SELECT H,J', BAVolumeReturn); // Daily relationship between volume and return for Boeing
+            Drawing('general-dynamics', 'SELECT H,J', GDVolumeReturn); // Daily relationship between volume and return for General Dynamics
+            Drawing('lockheed-martin', 'SELECT H,J', LMTVolumeReturn); // Daily relationship between volume and return for Lockheed Martin
+            Drawing('northrop-grumman', 'SELECT H,J', NOCVolumeReturn); // Daily relationship between volume and return for Northrop Grumman
+            Drawing('raytheon-technologies', 'SELECT H,J', RTXVolumeReturn); // Daily relationship between volume and return for Raytheon Technologies
+            Drawing('greatest-volumes', 'SELECT G,J,I,L,H', BABubble); // Ten greatest relative rises in volume for Boeing
+            Drawing('greatest-volumes', 'SELECT T,W,V,Y,U', GDBubble); // Ten greatest relative rises in volume for General Dynamics
+            Drawing('greatest-volumes', 'SELECT AG,AJ,AI,AL,AH', LMTBubble); // Ten greatest relative rises in volume for Lockheed Martin
+            Drawing('greatest-volumes', 'SELECT AT,AW,AV,AY,AU', NOCBubble); // Ten greatest relative rises in volume for Northrop Grumman
+            Drawing('greatest-volumes', 'SELECT BG,BJ,BI,BL,BH', RTXBubble); // Ten greatest relative rises in volume for Raytheon Technologies
         }
 
         function Drawing(sheet, query, StockVisual){
@@ -63,10 +63,10 @@
                 title: 'Boeing: Analyzing the Greatest Relative Rises in Volume with their Accompanying Returns',
                 vAxis: {title: 'Return (%)'},
                 hAxis: {title: 'Relative Change in Volume (%)'},
-                colors: ['green','#cd2626'],
+                colors: ['green','#cd2626'], // Green bubbles indicate gains in returns, while red ones indicate otherwise.
                 bubble: {
                     textStyle: {fontSize: 10,
-                    auraColor: 'none',
+                    auraColor: 'none', // This prevents the text from obfuscating the bubble's data.
                     }
                 }
             }
@@ -255,7 +255,7 @@
                     <h3></h3>
                     <h3><a href= "https://github.com/jvalle58/Valle-DATS-6401-Final-Project">GitHub Repository Link</a></h3>
                     <h3></h3>
-                    <h3><a href= "https://www.w3schools.com/css/css_link.asp">Zenodo Link</a></h3>
+                    <h3><a href= "https://zenodo.org/">Zenodo Link</a></h3>
                 </div>
             </div>
         </div>
