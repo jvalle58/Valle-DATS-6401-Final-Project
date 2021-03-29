@@ -12,13 +12,13 @@
         google.charts.setOnLoadCallback(GoogleDraw);
 
         function GoogleDraw() {
-            Drawing('lockheed-martin', 'SELECT C,G', LMTHistoricalClosingPrices);
-            Drawing('greatest-closes-returns', 'SELECT Y,AA', LMTGreatestCloses);
-            Drawing('shares', 'SELECT A,D', LMTCloseShares);
-            Drawing('greatest-closes-returns', 'SELECT AE,AH', LMTGreatestReturns);
-            Drawing('annuals', 'SELECT I,K', LMTAnnualReturns);
-            Drawing('shares', 'SELECT H,K', LMTVolumeShares);
-            Drawing('greatest-volumes', 'SELECT AA,AB', LMTGreatestVolumes);
+            Drawing('lockheed-martin', 'SELECT C,G', LMTHistoricalClosingPrices); // Lockheed Martin historical closing prices from 1985 to 2021
+            Drawing('greatest-closes-returns', 'SELECT Y,AA', LMTGreatestCloses); // Greatest absolute changes in Lockheed Martin stock
+            Drawing('shares', 'SELECT A,D', LMTCloseShares); // Frequency breakdowns of certain closing price ranges for Lockheed Martin
+            Drawing('greatest-closes-returns', 'SELECT AE,AH', LMTGreatestReturns); // Greatest relative changes in Lockheed Martin stock
+            Drawing('annuals', 'SELECT I,K', LMTAnnualReturns); // Lockheed Martin annual returns from 1985 to 2021
+            Drawing('shares', 'SELECT H,K', LMTVolumeShares); // Frequency breakdowns of certain volume ranges for Lockheed Martin
+            Drawing('greatest-volumes', 'SELECT AA,AB', LMTGreatestVolumes); // Ten greatest volumes posted by Lockheed Martin
         }
 
         function Drawing(sheet, query, StockVisual){
@@ -41,7 +41,7 @@
             var data = response.getDataTable();
             var options = {
                 title: 'Historical Closing Prices of Lockheed Martin Stock from 1985 to 2021',
-                colors: ['#fd6a00'],
+                colors: ['#fd6a00'], // #FD6A00 will be the primary color of reference for Lockheed Martin in this project.
                 vAxis: {title: 'Closing Price ($)'},
                 hAxis: {title: 'Date'},
                 legend: 'none',
@@ -167,7 +167,7 @@
                     <h3></h3>
                     <h3><a href= "https://github.com/jvalle58/Valle-DATS-6401-Final-Project">GitHub Repository Link</a></h3>
                     <h3></h3>
-                    <h3><a href= "https://www.w3schools.com/css/css_link.asp">Zenodo Link</a></h3>
+                    <h3><a href= "https://zenodo.org/">Zenodo Link</a></h3>
                 </div>
             </div>
         </div>
