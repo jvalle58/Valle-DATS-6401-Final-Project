@@ -12,13 +12,13 @@
         google.charts.setOnLoadCallback(GoogleDraw);
 
         function GoogleDraw() {
-            Drawing('raytheon-technologies', 'SELECT C,G', RTXHistoricalClosingPrices);
-            Drawing('greatest-closes-returns', 'SELECT AW,AY', RTXGreatestCloses);
-            Drawing('shares', 'SELECT A,F', RTXCloseShares);
-            Drawing('greatest-closes-returns', 'SELECT BC,BF', RTXGreatestReturns);
-            Drawing('annuals', 'SELECT Q,S', RTXAnnualReturns);
-            Drawing('shares', 'SELECT H,M', RTXVolumeShares);
-            Drawing('greatest-volumes', 'SELECT BA,BB', RTXGreatestVolumes);
+            Drawing('raytheon-technologies', 'SELECT C,G', RTXHistoricalClosingPrices); // Raytheon Technologies historical closing prices from 1985 to 2021
+            Drawing('greatest-closes-returns', 'SELECT AW,AY', RTXGreatestCloses); // Greatest absolute changes in Raytheon Technologies stock
+            Drawing('shares', 'SELECT A,F', RTXCloseShares); // Frequency breakdowns of certain closing price ranges for Raytheon Technologies
+            Drawing('greatest-closes-returns', 'SELECT BC,BF', RTXGreatestReturns); // Greatest relative changes in Raytheon Technologies stock
+            Drawing('annuals', 'SELECT Q,S', RTXAnnualReturns); // Raytheon Technologies annual returns from 1985 to 2021
+            Drawing('shares', 'SELECT H,M', RTXVolumeShares); // Frequency breakdowns of certain volume ranges for Raytheon Technologies
+            Drawing('greatest-volumes', 'SELECT BA,BB', RTXGreatestVolumes); // Ten greatest volumes posted by Raytheon Technologies
         }
 
         function Drawing(sheet, query, StockVisual){
@@ -41,7 +41,7 @@
             var data = response.getDataTable();
             var options = {
                 title: 'Historical Closing Prices of Raytheon Technologies Stock from 1985 to 2021',
-                colors: ['#cd2626'],
+                colors: ['#cd2626'], // #CD2626 will be the primary color of reference for Raytheon Technologies in this project.
                 vAxis: {title: 'Closing Price ($)'},
                 hAxis: {title: 'Date'},
                 legend: 'none',
@@ -167,7 +167,7 @@
                     <h3></h3>
                     <h3><a href= "https://github.com/jvalle58/Valle-DATS-6401-Final-Project">GitHub Repository Link</a></h3>
                     <h3></h3>
-                    <h3><a href= "https://www.w3schools.com/css/css_link.asp">Zenodo Link</a></h3>
+                    <h3><a href= "https://zenodo.org/">Zenodo Link</a></h3>
                 </div>
             </div>
         </div>
