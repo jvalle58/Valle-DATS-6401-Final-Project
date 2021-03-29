@@ -142,7 +142,10 @@
             data.sort({column: 1, desc: true});
             var options = {
                 title: 'Comparing Average Returns of Defense Contractors and the S&P 500 from 1985 to 2021',
-                vAxis: {title: 'Return (%)'},
+                vAxis: {
+                    title: 'Return (%)',
+                    viewWindow: {min: 0},
+                    },
                 hAxis: {title: 'Ticker'},
                 colors: ['#20b2aa'],
                 legend: 'none',
