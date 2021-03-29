@@ -12,10 +12,10 @@
         google.charts.setOnLoadCallback(GoogleDraw);
 
         function GoogleDraw() {
-            Drawing('contractors-annuals-transposed', 'SELECT A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF,AG,AH,AI,AJ,AK,AL,AM', ContractorAnnualReturn);
-            Drawing('all-annuals-transposed', 'SELECT A, AM', AverageAnnualReturn)
-            Drawing('averages', 'SELECT A,B', AverageClosingPrice);
-            Drawing('averages', 'SELECT G,H', AverageDailyVolume);
+            Drawing('contractors-annuals-transposed', 'SELECT A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF,AG,AH,AI,AJ,AK,AL,AM', ContractorAnnualReturn); //Annual returns of defense contractors from 1985 to 2021
+            Drawing('all-annuals-transposed', 'SELECT A, AM', AverageAnnualReturn) // Mean annual return of defense contractors and the S&P 500 from 1985 to 2021
+            Drawing('averages', 'SELECT A,B', AverageClosingPrice); // Average closing price of defense contractors from 1985 to 2021
+            Drawing('averages', 'SELECT G,H', AverageDailyVolume); // Average daily volume of defense contractors from 1985 to 2021
         }
 
         function Drawing(sheet, query, StockVisual){
@@ -36,7 +36,7 @@
         function ContractorAnnualReturn(response){
             Warning(response);
             var data = response.getDataTable();
-            data.sort({column: 38, desc: true});
+            data.sort({column: 38, desc: true}); // The contractors are sorted from highest to lowest in terms of their mean annual returns.
             var options = {
                 title: 'Comparing Annual Returns of Defense Contractors from 1985 to 2021',
                 hAxis: {title: 'Ticker'},
@@ -44,8 +44,8 @@
                 seriesType: 'bars',
                 series: {
                     37: {
-                        type:'line',
-                        pointsVisible: true,
+                        type:'line', 
+                        pointsVisible: true, // The combo chart's line connects the contractors' mean annual returns with visible points.
                         pointSize: 8,
                     },
                     0: {color: '#ee1289'},
@@ -86,7 +86,7 @@
                     35: {color: '#ee1289'},
                     36: {color: '#ee1289'},
                 },
-                colors: ['green'],
+                colors: ['green'], // The combo chart's line is assigned a separate color from the individual years.
                 bar: {groupWidth: 146},
                 lineWidth: 4,
                 legend: 'none',
@@ -139,7 +139,7 @@
         function AverageAnnualReturn(response){
             Warning(response);
             var data = response.getDataTable();
-            data.sort({column: 1, desc: true});
+            data.sort({column: 1, desc: true}); // The contractors and the S&P 500 are sorted from highest to lowest in terms of their average annual returns.
             var options = {
                 title: 'Comparing Average Returns of Defense Contractors and the S&P 500 from 1985 to 2021',
                 vAxis: {
@@ -161,7 +161,7 @@
         function AverageClosingPrice(response){
             Warning(response);
             var data = response.getDataTable();
-            data.sort({column: 1, desc: true});
+            data.sort({column: 1, desc: true}); // The contractors are sorted from highest to lowest in terms of their average closing prices.
             var options = {
                 title: 'Average Closing Prices of Defense Contractors from 1985 to 2021',
                 vAxis: {title: 'Ticker'},
@@ -181,7 +181,7 @@
         function AverageDailyVolume(response){
             Warning(response);
             var data = response.getDataTable();
-            data.sort({column: 1, desc: true});
+            data.sort({column: 1, desc: true}); // The contractors are sorted from highest to lowest in terms of their average daily volumes.
             var options = {
                 title: 'Average Daily Volumes of Defense Contractors from 1985 to 2021',
                 vAxis: {title: 'Ticker'},
@@ -211,7 +211,7 @@
                     <h3></h3>
                     <h3><a href= "https://github.com/jvalle58/Valle-DATS-6401-Final-Project">GitHub Repository Link</a></h3>
                     <h3></h3>
-                    <h3><a href= "https://www.w3schools.com/css/css_link.asp">Zenodo Link</a></h3>
+                    <h3><a href= "https://zenodo.org/">Zenodo Link</a></h3>
                 </div>
             </div>
         </div>
