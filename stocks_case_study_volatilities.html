@@ -12,16 +12,16 @@
         google.charts.setOnLoadCallback(GoogleDraw);
 
         function GoogleDraw() {
-            Drawing('daily-ranges', 'SELECT B', BARangeDistribution);
-            Drawing('daily-ranges', 'SELECT C', GDRangeDistribution);
-            Drawing('daily-ranges', 'SELECT D', LMTRangeDistribution);
-            Drawing('daily-ranges', 'SELECT E', NOCRangeDistribution);
-            Drawing('daily-ranges', 'SELECT F', RTXRangeDistribution);
-            Drawing('daily-returns', 'SELECT G,B', MarketVsBA);
-            Drawing('daily-returns', 'SELECT G,C', MarketVsGD);
-            Drawing('daily-returns', 'SELECT G,D', MarketVsLMT);
-            Drawing('daily-returns', 'SELECT G,E', MarketVsNOC);
-            Drawing('daily-returns', 'SELECT G,F', MarketVsRTX);
+            Drawing('daily-ranges', 'SELECT B', BARangeDistribution); // Daily price range distribution for Boeing from 2016 to 2021
+            Drawing('daily-ranges', 'SELECT C', GDRangeDistribution); // Daily price range distribution for General Dynamics from 2016 to 2021
+            Drawing('daily-ranges', 'SELECT D', LMTRangeDistribution); // Daily price range distribution for Lockheed Martin from 2016 to 2021
+            Drawing('daily-ranges', 'SELECT E', NOCRangeDistribution); // Daily price range distribution for Northrop Grumman from 2016 to 2021
+            Drawing('daily-ranges', 'SELECT F', RTXRangeDistribution); // Daily price range distribution for Raytheon Technologies from 2016 to 2021
+            Drawing('daily-returns', 'SELECT G,B', MarketVsBA); // Cross-examination of the S&P 500 and Boeing's daily returns from 2016 to 2021
+            Drawing('daily-returns', 'SELECT G,C', MarketVsGD); // Cross-examination of the S&P 500 and General Dynamics' daily returns from 2016 to 2021
+            Drawing('daily-returns', 'SELECT G,D', MarketVsLMT); // Cross-examination of the S&P 500 and Lockheed Martin's daily returns from 2016 to 2021
+            Drawing('daily-returns', 'SELECT G,E', MarketVsNOC); // Cross-examination of the S&P 500 and Northrop Grumman's daily returns from 2016 to 2021
+            Drawing('daily-returns', 'SELECT G,F', MarketVsRTX); // Cross-examination of the S&P 500 and Raytheon Technologies' daily returns from 2016 to 2021
         }
 
         function Drawing(sheet, query, StockVisual){
@@ -48,7 +48,7 @@
                 vAxis: {title: 'Frequency'},
                 hAxis: {
                     title: 'Range ($)',
-                    showTextEvery: 4,
+                    showTextEvery: 4, // This prevents the axis labels from stacking on top of each other.
                 },
                 colors: ['purple'],
             };
@@ -150,10 +150,10 @@
                 legend: true,
                 trendlines: {
                     0: {
-                        type: 'linear',
+                        type: 'linear', // The scatter chart includes a trending linear regression that outlines the contractor's slope, printing its beta as a measure of volatility.
                         lineWidth: 4,
-                        color: 'green',
-                        showR2: true,
+                        color: 'green', // The linear regression is assigned a separate color to distinguish it from the data points.
+                        showR2: true, // The amount of variation that can be explained by the data, as shown by R^2, is posted.
                         visibleInLegend: true,
                 }
                 }
@@ -290,7 +290,7 @@
                     <h3></h3>
                     <h3><a href= "https://github.com/jvalle58/Valle-DATS-6401-Final-Project">GitHub Repository Link</a></h3>
                     <h3></h3>
-                    <h3><a href= "https://www.w3schools.com/css/css_link.asp">Zenodo Link</a></h3>
+                    <h3><a href= "https://zenodo.org/">Zenodo Link</a></h3>
                 </div>
             </div>
         </div>
