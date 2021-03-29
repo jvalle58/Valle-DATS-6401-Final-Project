@@ -12,13 +12,13 @@
         google.charts.setOnLoadCallback(GoogleDraw);
 
         function GoogleDraw() {
-            Drawing('general-dynamics', 'SELECT C,G', GDHistoricalClosingPrices);
-            Drawing('greatest-closes-returns', 'SELECT M,O', GDGreatestCloses);
-            Drawing('shares', 'SELECT A,C', GDCloseShares);
-            Drawing('greatest-closes-returns', 'SELECT S,V', GDGreatestReturns);
-            Drawing('annuals', 'SELECT E,G', GDAnnualReturns);
-            Drawing('shares', 'SELECT H,J', GDVolumeShares);
-            Drawing('greatest-volumes', 'SELECT N,O', GDGreatestVolumes);
+            Drawing('general-dynamics', 'SELECT C,G', GDHistoricalClosingPrices); // General Dynamics historical closing prices from 1985 to 2021
+            Drawing('greatest-closes-returns', 'SELECT M,O', GDGreatestCloses); // Greatest absolute changes in General Dynamics stock
+            Drawing('shares', 'SELECT A,C', GDCloseShares); // Frequency breakdowns of certain closing price ranges for General Dynamics
+            Drawing('greatest-closes-returns', 'SELECT S,V', GDGreatestReturns); // Greatest relative changes in General Dynamics stock
+            Drawing('annuals', 'SELECT E,G', GDAnnualReturns); // General Dynamics annual returns from 1985 to 2021
+            Drawing('shares', 'SELECT H,J', GDVolumeShares); // Frequency breakdowns of certain volume ranges for General Dynamics
+            Drawing('greatest-volumes', 'SELECT N,O', GDGreatestVolumes); // Ten greatest volumes posted by General Dynamics
         }
 
         function Drawing(sheet, query, StockVisual){
@@ -41,7 +41,7 @@
             var data = response.getDataTable();
             var options = {
                 title: 'Historical Closing Prices of General Dynamics Stock from 1985 to 2021',
-                colors: ['gray'],
+                colors: ['gray'], // Gray will be the primary color of reference for General Dynamics in this project.
                 vAxis: {title: 'Closing Price ($)'},
                 hAxis: {title: 'Date'},
                 legend: 'none',
@@ -167,7 +167,7 @@
                     <h3></h3>
                     <h3><a href= "https://github.com/jvalle58/Valle-DATS-6401-Final-Project">GitHub Repository Link</a></h3>
                     <h3></h3>
-                    <h3><a href= "https://www.w3schools.com/css/css_link.asp">Zenodo Link</a></h3>
+                    <h3><a href= "https://zenodo.org/">Zenodo Link</a></h3>
                 </div>
             </div>
         </div>
