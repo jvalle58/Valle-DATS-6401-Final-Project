@@ -12,13 +12,13 @@
         google.charts.setOnLoadCallback(GoogleDraw);
 
         function GoogleDraw() {
-            Drawing('boeing', 'SELECT C,G', BAHistoricalClosingPrices);
-            Drawing('greatest-closes-returns', 'SELECT A,C', BAGreatestCloses);
-            Drawing('shares', 'SELECT A,B', BACloseShares);
-            Drawing('greatest-closes-returns', 'SELECT G,J', BAGreatestReturns);
-            Drawing('annuals', 'SELECT A,C', BAAnnualReturns);
-            Drawing('shares', 'SELECT H,I', BAVolumeShares);
-            Drawing('greatest-volumes', 'SELECT A,B', BAGreatestVolumes);
+            Drawing('boeing', 'SELECT C,G', BAHistoricalClosingPrices); // Boeing historical closing prices from 1985 to 2021
+            Drawing('greatest-closes-returns', 'SELECT A,C', BAGreatestCloses); // Greatest absolute changes in Boeing stock
+            Drawing('shares', 'SELECT A,B', BACloseShares); // Frequency breakdowns of certain closing price ranges for Boeing
+            Drawing('greatest-closes-returns', 'SELECT G,J', BAGreatestReturns); // Greatest relative changes in Boeing stock
+            Drawing('annuals', 'SELECT A,C', BAAnnualReturns); // Boeing annual returns from 1985 to 2021
+            Drawing('shares', 'SELECT H,I', BAVolumeShares); // Frequency breakdowns of certain volume ranges for Boeing
+            Drawing('greatest-volumes', 'SELECT A,B', BAGreatestVolumes); // Ten greatest volumes posted by Boeing
         }
 
         function Drawing(sheet, query, StockVisual){
@@ -41,7 +41,7 @@
             var data = response.getDataTable();
             var options = {
                 title: 'Historical Closing Prices of Boeing Stock from 1985 to 2021',
-                colors: ['purple'],
+                colors: ['purple'], // Purple will be the primary color of reference for Boeing in this project.
                 vAxis: {title: 'Closing Price ($)'},
                 hAxis: {title: 'Date'},
                 legend: 'none',
@@ -57,7 +57,7 @@
         function BAGreatestCloses(response){
             Warning(response);
             var data = response.getDataTable();
-            data.sort({column: 1, desc: true});
+            data.sort({column: 1, desc: true}); // The resulting graph has its values sorted from highest to lowest.
             var options = {
                 title: 'Greatest Absolute Rises and Declines in Boeing Stock from 1985 to 2021',
                 vAxis: {title: 'Date'},
@@ -78,7 +78,7 @@
             var data = response.getDataTable();
             var options = {
                 title: 'Frequency Shares of Closing Price Ranges for Boeing Stock from 1985 to 2021',
-                pieHole: 0.35,
+                pieHole: 0.35, // The resulting graph is a donut chart due to its hole.
             };
             var chart = new google.visualization.PieChart(document.getElementById('ba_close_shares_div'));
             chart.draw(data, options);
@@ -167,7 +167,7 @@
                     <h3></h3>
                     <h3><a href= "https://github.com/jvalle58/Valle-DATS-6401-Final-Project">GitHub Repository Link</a></h3>
                     <h3></h3>
-                    <h3><a href= "https://www.w3schools.com/css/css_link.asp">Zenodo Link</a></h3>
+                    <h3><a href= "https://zenodo.org/">Zenodo Link</a></h3>
                 </div>
             </div>
         </div>
