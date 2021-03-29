@@ -12,11 +12,11 @@
         google.charts.setOnLoadCallback(GoogleDraw);
 
         function GoogleDraw() {
-            Drawing('sp-500', 'SELECT C,G', SPXHistoricalClosingPrices);
-            Drawing('annuals', 'SELECT U,W', SPXAnnualReturns);
+            Drawing('sp-500', 'SELECT C,G', SPXHistoricalClosingPrices); // S&P 500 historical closing prices from 1985 to 2021
+            Drawing('annuals', 'SELECT U,W', SPXAnnualReturns); // S&P 500 annual returns from 1985 to 2021
         }
 
-        function Drawing(sheet, query, StockVisual){
+        function Drawing(sheet, query, StockVisual){ // The Google Sheets link printed below will be our main reference.
             var Selection = encodeURIComponent(query);
             var query = new google.visualization.Query(
                 'https://docs.google.com/spreadsheets/d/1BlxmZ4Fu3UHgxLBSt1OmNijkEfIoAWXBnZXWpousGeE/gviz/tq?sheet='
@@ -24,7 +24,7 @@
                 query.send(StockVisual);
         }
 
-        function Warning(response){
+        function Warning(response){ // We want to make sure we are not pulling an invalid query on the data from Google Sheets.
             if (response.isError()) {
                 alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
                 return;
@@ -36,13 +36,13 @@
             var data = response.getDataTable();
             var options = {
                 title: 'Historical Closing Prices of the S&P 500 Index from 1985 to 2021',
-                colors: ['green'],
+                colors: ['green'], // Green will be the primary color to reference the S&P 500 in this project.
                 vAxis: {title: 'Closing Price ($)'},
                 hAxis: {title: 'Date'},
                 legend: 'none',
             };
             var formatter = new google.visualization.NumberFormat({
-                fractionDigits: 2, prefix: '$'});
+                fractionDigits: 2, prefix: '$'}); // Dollar figures get reported with a $ in front and are rounded to two decimal places.
             formatter.format(data,1);
 
             var chart = new google.visualization.AreaChart(document.getElementById('spx_historical_prices_div'));
@@ -63,8 +63,8 @@
                 lineWidth: 3,
                 legend: 'none',
             }
-            var formatter = new google.visualization.NumberFormat({
-                fractionDigits: 2, suffix: '%'});
+            var formatter = new google.visualization.NumberFormat({ 
+                fractionDigits: 2, suffix: '%'}); // Percent figures get reported with a % at the end and are rounded to two decimal places.
                 formatter.format(data,1);
 
             var chart = new google.visualization.LineChart(document.getElementById('spx_annual_returns_div'));
