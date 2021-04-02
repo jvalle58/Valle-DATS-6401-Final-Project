@@ -91,7 +91,14 @@
             var options = {
                 title: 'Greatest Relative Rises and Declines in Raytheon Technologies Stock from 1985 to 2021',
                 vAxis: {title: 'Date'},
-                hAxis: {title: 'Daily Return (%)'},
+                hAxis: {
+                    title: 'Daily Return (%)',
+                    viewWindow: {
+                        min: -30,
+                        max: 20,
+                    },
+                    gridlines: {count: 5}
+                },
                 colors: ['#cd2626'],
                 legend: 'none',
             }
