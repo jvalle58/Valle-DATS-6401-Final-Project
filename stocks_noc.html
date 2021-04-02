@@ -91,7 +91,14 @@
             var options = {
                 title: 'Greatest Relative Rises and Declines in Northrop Grumman Stock from 1985 to 2021',
                 vAxis: {title: 'Date'},
-                hAxis: {title: 'Daily Return (%)'},
+                hAxis: {
+                    title: 'Daily Return (%)',
+                    viewWindow: {
+                        min: -20,
+                        max: 30,
+                    },
+                    gridlines: {count: 5}
+                },
                 colors: ['#3a5fcd'],
                 legend: 'none',
             }
