@@ -61,7 +61,14 @@
             var options = {
                 title: 'Greatest Absolute Rises and Declines in Lockheed Martin Stock from 1985 to 2021',
                 vAxis: {title: 'Date'},
-                hAxis: {title: 'Change in Closing Price ($)'},
+                hAxis: {
+                    title: 'Change in Closing Price ($)',
+                    viewWindow: {
+                        min: -50,
+                        max: 40,
+                    },
+                    gridlines: {count: 5},
+                },
                 colors: ['#fd6a00'],
                 legend: 'none',
             }
@@ -91,7 +98,14 @@
             var options = {
                 title: 'Greatest Relative Rises and Declines in Lockheed Martin Stock from 1985 to 2021',
                 vAxis: {title: 'Date'},
-                hAxis: {title: 'Daily Return (%)'},
+                hAxis: {
+                    title: 'Daily Return (%)',
+                    viewWindow: {
+                        min: -30,
+                        max: 20,
+                    },
+                    gridlines: {count: 5}
+                },
                 colors: ['#fd6a00'],
                 legend: 'none',
             }
