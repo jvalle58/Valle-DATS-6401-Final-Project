@@ -8,7 +8,7 @@
     <title>DATS 6401 - Final Project - Joseph Valle (General Dynamics)</title>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
-        google.charts.load('current', {'packages':['corechart']});
+        google.charts.load('current', {'packages':['corechart', 'controls']});
         google.charts.setOnLoadCallback(GoogleDraw);
 
         function GoogleDraw() {
@@ -39,19 +39,45 @@
         function GDHistoricalClosingPrices(response){
             Warning(response);
             var data = response.getDataTable();
-            var options = {
-                title: 'Historical Closing Prices of General Dynamics Stock from 1985 to 2021',
-                colors: ['gray'], // Gray will be the primary color of reference for General Dynamics in this project.
-                vAxis: {title: 'Closing Price ($)'},
-                hAxis: {title: 'Date'},
-                legend: 'none',
-            };
+            var chart = new google.visualization.ChartWrapper({
+                'chartType': 'AreaChart',
+                'containerId': 'gd_historical_prices_div',
+                'options': {
+                    'title': 'Historical Closing Prices of General Dynamics Stock from 1985 to 2021',
+                    'colors': ['gray'], // Gray will be our primary color of reference for General Dynamics in this project.
+                    'vAxis': {
+                        title: 'Closing Price ($)',
+                        format: '$#,###',
+                    },
+                    'hAxis': {
+                        title: 'Date',
+                        format: 'MMM d, YYYY', 
+                    },
+                    'crosshair': {
+                        'color': '#000',
+                        'trigger': 'both', 
+                    },
+                    'legend': 'none',
+                }
+            });
             var formatter = new google.visualization.NumberFormat({
-                fractionDigits: 2, prefix: '$'});
-            formatter.format(data,1);
+                fractionDigits: 2, prefix: '$'}); 
+                formatter.format(data,1);
 
-            var chart = new google.visualization.AreaChart(document.getElementById('gd_historical_prices_div'));
-            chart.draw(data, options);
+            var dashboard = new google.visualization.Dashboard(
+                document.getElementById('dashboard_div'));
+
+            var ChartSlider = new google.visualization.ControlWrapper({
+                'controlType': 'DateRangeFilter',
+                'containerId': 'slider_div',
+                'options': {
+                    'filterColumnLabel': 'Date',
+                    'ui': {'label': 'Date Range:'},
+                    },
+            });
+
+            dashboard.bind(ChartSlider, chart);
+            dashboard.draw(data);
         }
 
         function GDGreatestCloses(response){
@@ -64,7 +90,7 @@
                 hAxis: {title: 'Change in Closing Price ($)'},
                 colors: ['gray'],
                 legend: 'none',
-            }
+            };
             var formatter = new google.visualization.NumberFormat({
                 fractionDigits: 2, prefix: '$'});
                 formatter.format(data,1);
@@ -80,6 +106,10 @@
                 title: 'Frequency Shares of Closing Price Ranges for General Dynamics Stock from 1985 to 2021',
                 pieHole: 0.35,
             };
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '###,###'}); 
+                formatter.format(data,1);
+
             var chart = new google.visualization.PieChart(document.getElementById('gd_close_shares_div'));
             chart.draw(data, options);
         }
@@ -94,7 +124,7 @@
                 hAxis: {title: 'Daily Return (%)'},
                 colors: ['gray'],
                 legend: 'none',
-            }
+            };
             var formatter = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
                 formatter.format(data,1);
@@ -106,23 +136,53 @@
         function GDAnnualReturns(response){
             Warning(response);
             var data = response.getDataTable();
-            var options = {
-                title: 'General Dynamics Annual Returns from 1985 to 2021',
-                vAxis: {title: 'Annual Return (%)'},
-                hAxis: {
-                    title: 'Year',
-                    format: '0000',
-                },
-                colors: ['gray'],
-                lineWidth: 3,
-                legend: 'none',
-            }
+            var chart = new google.visualization.ChartWrapper({
+                'chartType': 'LineChart',
+                'containerId': 'gd_annual_returns_div',
+                'options': {
+                    'title': 'General Dynamics Annual Returns from 1985 to 2021',
+                    'colors': ['gray'],
+                    'vAxis': {
+                        title: 'Annual Return (%)',
+                        format: 'short',
+                    },
+                    'hAxis': {
+                        title: 'Year',
+                        format: '0000',
+                    },
+                    'crosshair': {
+                        'color': '#000',
+                        'trigger': 'both', 
+                    },
+                    'lineWidth': 3,
+                    'pointsVisible': true,
+                    'legend': 'none',
+                }
+            });
             var formatter = new google.visualization.NumberFormat({
-                fractionDigits: 2, suffix: '%'});
+                fractionDigits: 2, suffix: '%'}); 
                 formatter.format(data,1);
 
-            var chart = new google.visualization.LineChart(document.getElementById('gd_annual_returns_div'));
-            chart.draw(data, options);
+            var dashboard = new google.visualization.Dashboard(
+                document.getElementById('dashboard_div'));
+
+            var ChartSlider = new google.visualization.ControlWrapper({
+                'controlType': 'NumberRangeFilter',
+                'containerId': 'year_slider_div',
+                'options': {
+                    'filterColumnLabel': 'Year',
+                    'ui': {
+                        'label': 'Year Range:',
+                        'format': {
+                            fractionDigits: 0,
+                            groupingSymbol: '',
+                        }
+                    },
+                    },
+            });
+
+            dashboard.bind(ChartSlider, chart);
+            dashboard.draw(data);
         }
 
         function GDVolumeShares(response){
@@ -132,6 +192,10 @@
                 title: 'Frequency Shares of Volume Ranges for General Dynamics Stock from 1985 to 2021',
                 pieHole: 0.35,
             };
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter.format(data,1);
+                
             var chart = new google.visualization.PieChart(document.getElementById('gd_volume_shares_div'));
             chart.draw(data, options);
         }
@@ -146,7 +210,11 @@
                 vAxis: {title: 'Volume'},
                 colors: ['gray'],
                 legend: 'none',
-            }
+            };
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter.format(data,1);
+
             var chart = new google.visualization.ColumnChart(document.getElementById('gd_greatest_volumes_div'));
             chart.draw(data, options);
         }
@@ -210,7 +278,10 @@
             As with Boeing, scroll below to examine General Dynamics' historical tendencies within the stock market as related to price, return, and volume over our time span of interest.
         </p>
         <h5>Prices</h5>
-        <div id="gd_historical_prices_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
+        <div id= "dashboard_div">
+            <div id = "gd_historical_prices_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
+            <h6><div id = "slider_div" style="width: 400px; height: 5px; display: block; margin: 0 auto;"></div></h6>
+        </div>
         <br>
         <table>
             <tr>
@@ -225,7 +296,12 @@
                 <td><div id="gd_greatest_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
                 <td><div id="gd_annual_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
             </tr>
+            <tr>
+                <td></td>
+                <td><h6><div id = "year_slider_div" style="width: 400px; height: 5px; display: block; margin: 0 auto;"></div></h6></td>
+            </tr>
         </table>
+        <br>
         <br>
         <h5>Volumes</h5>
         <table>
