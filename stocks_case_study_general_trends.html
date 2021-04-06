@@ -93,44 +93,44 @@
             };
             var formatter = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
-            formatter.format(data,1);
-            formatter.format(data,2);
-            formatter.format(data,3);
-            formatter.format(data,4);
-            formatter.format(data,5);
-            formatter.format(data,6);
-            formatter.format(data,7);
-            formatter.format(data,8);
-            formatter.format(data,9);
-            formatter.format(data,10);
-            formatter.format(data,11);
-            formatter.format(data,12);
-            formatter.format(data,13);
-            formatter.format(data,14);
-            formatter.format(data,15);
-            formatter.format(data,16);
-            formatter.format(data,17);
-            formatter.format(data,18);
-            formatter.format(data,19);
-            formatter.format(data,20);
-            formatter.format(data,21);
-            formatter.format(data,22);
-            formatter.format(data,23);
-            formatter.format(data,24);
-            formatter.format(data,25);
-            formatter.format(data,26);
-            formatter.format(data,27);
-            formatter.format(data,28);
-            formatter.format(data,29);
-            formatter.format(data,30);
-            formatter.format(data,31);
-            formatter.format(data,32);
-            formatter.format(data,33);
-            formatter.format(data,34);
-            formatter.format(data,35);
-            formatter.format(data,36);
-            formatter.format(data,37);
-            formatter.format(data,38);
+                formatter.format(data,1);
+                formatter.format(data,2);
+                formatter.format(data,3);
+                formatter.format(data,4);
+                formatter.format(data,5);
+                formatter.format(data,6);
+                formatter.format(data,7);
+                formatter.format(data,8);
+                formatter.format(data,9);
+                formatter.format(data,10);
+                formatter.format(data,11);
+                formatter.format(data,12);
+                formatter.format(data,13);
+                formatter.format(data,14);
+                formatter.format(data,15);
+                formatter.format(data,16);
+                formatter.format(data,17);
+                formatter.format(data,18);
+                formatter.format(data,19);
+                formatter.format(data,20);
+                formatter.format(data,21);
+                formatter.format(data,22);
+                formatter.format(data,23);
+                formatter.format(data,24);
+                formatter.format(data,25);
+                formatter.format(data,26);
+                formatter.format(data,27);
+                formatter.format(data,28);
+                formatter.format(data,29);
+                formatter.format(data,30);
+                formatter.format(data,31);
+                formatter.format(data,32);
+                formatter.format(data,33);
+                formatter.format(data,34);
+                formatter.format(data,35);
+                formatter.format(data,36);
+                formatter.format(data,37);
+                formatter.format(data,38);
 
             var chart = new google.visualization.ComboChart(document.getElementById('contractor_annual_return_div'));
             chart.draw(data, options);
@@ -152,7 +152,7 @@
             };
             var formatter = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
-            formatter.format(data,1);
+                formatter.format(data,1);
 
             var chart = new google.visualization.ColumnChart(document.getElementById('average_annual_return_div'));
             chart.draw(data, options);
@@ -172,7 +172,7 @@
             };
             var formatter = new google.visualization.NumberFormat({
                 fractionDigits: 2, prefix: '$'});
-            formatter.format(data,1);
+                formatter.format(data,1);
 
             var chart = new google.visualization.BarChart(document.getElementById('average_closing_price_div'));
             chart.draw(data, options);
@@ -190,6 +190,9 @@
                 colors: ['green'],
                 legend: 'none',
             };
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter.format(data,1);
 
             var chart = new google.visualization.BarChart(document.getElementById('average_daily_volume_div'));
             chart.draw(data, options);
