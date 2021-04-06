@@ -8,7 +8,7 @@
     <title>DATS 6401 - Final Project - Joseph Valle (Boeing)</title>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
-        google.charts.load('current', {'packages':['corechart']});
+        google.charts.load('current', {'packages':['corechart', 'controls']});
         google.charts.setOnLoadCallback(GoogleDraw);
 
         function GoogleDraw() {
@@ -39,19 +39,45 @@
         function BAHistoricalClosingPrices(response){
             Warning(response);
             var data = response.getDataTable();
-            var options = {
-                title: 'Historical Closing Prices of Boeing Stock from 1985 to 2021',
-                colors: ['purple'], // Purple will be the primary color of reference for Boeing in this project.
-                vAxis: {title: 'Closing Price ($)'},
-                hAxis: {title: 'Date'},
-                legend: 'none',
-            };
+            var chart = new google.visualization.ChartWrapper({
+                'chartType': 'AreaChart',
+                'containerId': 'ba_historical_prices_div',
+                'options': {
+                    'title': 'Historical Closing Prices of Boeing Stock from 1985 to 2021',
+                    'colors': ['purple'], // Purple will be our primary color of reference for Boeing in this project.
+                    'vAxis': {
+                        title: 'Closing Price ($)',
+                        format: '$#,###',
+                    },
+                    'hAxis': {
+                        title: 'Date',
+                        format: 'MMM d, YYYY', 
+                    },
+                    'crosshair': {
+                        'color': '#000',
+                        'trigger': 'both', 
+                    },
+                    'legend': 'none',
+                }
+            });
             var formatter = new google.visualization.NumberFormat({
-                fractionDigits: 2, prefix: '$'});
-            formatter.format(data,1);
+                fractionDigits: 2, prefix: '$'}); 
+                formatter.format(data,1);
 
-            var chart = new google.visualization.AreaChart(document.getElementById('ba_historical_prices_div'));
-            chart.draw(data, options);
+            var dashboard = new google.visualization.Dashboard(
+                document.getElementById('dashboard_div'));
+
+            var ChartSlider = new google.visualization.ControlWrapper({
+                'controlType': 'DateRangeFilter',
+                'containerId': 'slider_div',
+                'options': {
+                    'filterColumnLabel': 'Date',
+                    'ui': {'label': 'Date Range:'},
+                    },
+            });
+
+            dashboard.bind(ChartSlider, chart);
+            dashboard.draw(data);
         }
 
         function BAGreatestCloses(response){
@@ -71,7 +97,7 @@
                 },
                 colors: ['purple'],
                 legend: 'none',
-            }
+            };
             var formatter = new google.visualization.NumberFormat({
                 fractionDigits: 2, prefix: '$'});
                 formatter.format(data,1);
@@ -87,6 +113,10 @@
                 title: 'Frequency Shares of Closing Price Ranges for Boeing Stock from 1985 to 2021',
                 pieHole: 0.35, // The resulting graph is a donut chart due to its hole.
             };
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '###,###'}); // Large numbers are formatted to be separated by commas.
+                formatter.format(data,1);
+
             var chart = new google.visualization.PieChart(document.getElementById('ba_close_shares_div'));
             chart.draw(data, options);
         }
@@ -108,7 +138,7 @@
                 },
                 colors: ['purple'],
                 legend: 'none',
-            }
+            };
             var formatter = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
                 formatter.format(data,1);
@@ -120,23 +150,53 @@
         function BAAnnualReturns(response){
             Warning(response);
             var data = response.getDataTable();
-            var options = {
-                title: 'Boeing Annual Returns from 1985 to 2021',
-                vAxis: {title: 'Annual Return (%)'},
-                hAxis: {
-                    title: 'Year',
-                    format: '0000',
-                },
-                colors: ['purple'],
-                lineWidth: 3,
-                legend: 'none',
-            }
+            var chart = new google.visualization.ChartWrapper({
+                'chartType': 'LineChart',
+                'containerId': 'ba_annual_returns_div',
+                'options': {
+                    'title': 'Boeing Annual Returns from 1985 to 2021',
+                    'colors': ['purple'],
+                    'vAxis': {
+                        title: 'Annual Return (%)',
+                        format: 'short',
+                    },
+                    'hAxis': {
+                        title: 'Year',
+                        format: '0000',
+                    },
+                    'crosshair': {
+                        'color': '#000',
+                        'trigger': 'both', 
+                    },
+                    'lineWidth': 3,
+                    'pointsVisible': true,
+                    'legend': 'none',
+                }
+            });
             var formatter = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
                 formatter.format(data,1);
 
-            var chart = new google.visualization.LineChart(document.getElementById('ba_annual_returns_div'));
-            chart.draw(data, options);
+            var dashboard = new google.visualization.Dashboard(
+                document.getElementById('dashboard_div'));
+
+            var ChartSlider = new google.visualization.ControlWrapper({
+                'controlType': 'NumberRangeFilter',
+                'containerId': 'year_slider_div',
+                'options': {
+                    'filterColumnLabel': 'Year',
+                    'ui': {
+                        'label': 'Year Range:',
+                        'format': {
+                            fractionDigits: 0,
+                            groupingSymbol: '',
+                        }
+                    },
+                    },
+            });
+
+            dashboard.bind(ChartSlider, chart);
+            dashboard.draw(data);
         }
 
         function BAVolumeShares(response){
@@ -146,6 +206,10 @@
                 title: 'Frequency Shares of Volume Ranges for Boeing Stock from 1985 to 2021',
                 pieHole: 0.35,
             };
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter.format(data,1);
+
             var chart = new google.visualization.PieChart(document.getElementById('ba_volume_shares_div'));
             chart.draw(data, options);
         }
@@ -160,7 +224,11 @@
                 vAxis: {title: 'Volume'},
                 colors: ['purple'],
                 legend: 'none',
-            }
+            };
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter.format(data,1);
+
             var chart = new google.visualization.ColumnChart(document.getElementById('ba_greatest_volumes_div'));
             chart.draw(data, options);
         }
@@ -226,7 +294,10 @@
             The ten trading sessions exhibiting its highest volumes, along with its frequency shares with respect to certain closing price and volume ranges, are also included.
         </p>
         <h5>Prices</h5>
-        <div id="ba_historical_prices_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
+        <div id= "dashboard_div">
+            <div id = "ba_historical_prices_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
+            <h6><div id = "slider_div" style="width: 400px; height: 5px; display: block; margin: 0 auto;"></div></h6>
+        </div>
         <br>
         <table>
             <tr>
@@ -241,7 +312,12 @@
                 <td><div id="ba_greatest_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
                 <td><div id="ba_annual_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
             </tr>
+            <tr>
+                <td></td>
+                <td><h6><div id = "year_slider_div" style="width: 400px; height: 5px; display: block; margin: 0 auto;"></div></h6></td>
+            </tr>
         </table>
+        <br>
         <br>
         <h5>Volumes</h5>
         <table>
