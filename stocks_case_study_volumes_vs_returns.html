@@ -47,11 +47,20 @@
                 hAxis: {title: 'Volume'},
                 vAxis: {title: 'Return (%)'},
                 colors: ['purple'],
+                crosshair: {
+                    color: '#000',
+                    trigger: 'both',
+                },
                 legend: 'none',
             };
-            var formatter = new google.visualization.NumberFormat({
+            var formatter1 = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
-            formatter.format(data,1);
+                formatter1.format(data,1);
+
+            var formatter2 = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter2.format(data,0);
+
             var chart = new google.visualization.ScatterChart(document.getElementById('ba_volume_return_div'));
             chart.draw(data, options);
         } 
@@ -70,10 +79,14 @@
                     }
                 }
             }
-            var formatter = new google.visualization.NumberFormat({
+            var formatter1 = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
-                formatter.format(data,1);
-                formatter.format(data,2);
+                formatter1.format(data,1);
+                formatter1.format(data,2);
+
+            var formatter2 = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter2.format(data,4);
 
             var chart = new google.visualization.BubbleChart(document.getElementById('ba_bubble_div'));
             chart.draw(data, options);
@@ -87,11 +100,20 @@
                 hAxis: {title: 'Volume'},
                 vAxis: {title: 'Return (%)'},
                 colors: ['gray'],
+                crosshair: {
+                    color: '#000',
+                    trigger: 'both',
+                },
                 legend: 'none',
             };
-            var formatter = new google.visualization.NumberFormat({
+            var formatter1 = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
-            formatter.format(data,1);
+                formatter1.format(data,1);
+
+            var formatter2 = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter2.format(data,0);
+                
             var chart = new google.visualization.ScatterChart(document.getElementById('gd_volume_return_div'));
             chart.draw(data, options);
         } 
@@ -110,10 +132,14 @@
                     }
                 }
             }
-            var formatter = new google.visualization.NumberFormat({
+            var formatter1 = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
-                formatter.format(data,1);
-                formatter.format(data,2);
+                formatter1.format(data,1);
+                formatter1.format(data,2);
+
+            var formatter2 = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter2.format(data,4);
 
             var chart = new google.visualization.BubbleChart(document.getElementById('gd_bubble_div'));
             chart.draw(data, options);
@@ -127,11 +153,20 @@
                 hAxis: {title: 'Volume'},
                 vAxis: {title: 'Return (%)'},
                 colors: ['#fd6a00'],
+                crosshair: {
+                    color: '#000',
+                    trigger: 'both',
+                },
                 legend: 'none',
             };
-            var formatter = new google.visualization.NumberFormat({
+            var formatter1 = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
-            formatter.format(data,1);
+                formatter1.format(data,1);
+
+            var formatter2 = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter2.format(data,0);
+
             var chart = new google.visualization.ScatterChart(document.getElementById('lmt_volume_return_div'));
             chart.draw(data, options);
         } 
@@ -150,10 +185,14 @@
                     }
                 }
             }
-            var formatter = new google.visualization.NumberFormat({
+            var formatter1 = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
-                formatter.format(data,1);
-                formatter.format(data,2);
+                formatter1.format(data,1);
+                formatter1.format(data,2);
+
+            var formatter2 = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter2.format(data,4);
 
             var chart = new google.visualization.BubbleChart(document.getElementById('lmt_bubble_div'));
             chart.draw(data, options);
@@ -167,11 +206,20 @@
                 hAxis: {title: 'Volume'},
                 vAxis: {title: 'Return (%)'},
                 colors: ['#3a5fcd'],
+                crosshair: {
+                    color: '#000',
+                    trigger: 'both',
+                },
                 legend: 'none',
             };
-            var formatter = new google.visualization.NumberFormat({
+            var formatter1 = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
-            formatter.format(data,1);
+                formatter1.format(data,1);
+
+            var formatter2 = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter2.format(data,0);
+
             var chart = new google.visualization.ScatterChart(document.getElementById('noc_volume_return_div'));
             chart.draw(data, options);
         } 
@@ -190,10 +238,14 @@
                     }
                 }
             }
-            var formatter = new google.visualization.NumberFormat({
+            var formatter1 = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
-                formatter.format(data,1);
-                formatter.format(data,2);
+                formatter1.format(data,1);
+                formatter1.format(data,2);
+
+            var formatter2 = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter2.format(data,4);
 
             var chart = new google.visualization.BubbleChart(document.getElementById('noc_bubble_div'));
             chart.draw(data, options);
@@ -207,11 +259,20 @@
                 hAxis: {title: 'Volume'},
                 vAxis: {title: 'Return (%)'},
                 colors: ['#cd2626'],
+                crosshair: {
+                    color: '#000',
+                    trigger: 'both',
+                },
                 legend: 'none',
             };
-            var formatter = new google.visualization.NumberFormat({
+            var formatter1 = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
-            formatter.format(data,1);
+                formatter1.format(data,1);
+
+            var formatter2 = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter2.format(data,0);
+
             var chart = new google.visualization.ScatterChart(document.getElementById('rtx_volume_return_div'));
             chart.draw(data, options);
         } 
@@ -230,10 +291,14 @@
                     }
                 }
             }
-            var formatter = new google.visualization.NumberFormat({
+            var formatter1 = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
-                formatter.format(data,1);
-                formatter.format(data,2);
+                formatter1.format(data,1);
+                formatter1.format(data,2);
+
+            var formatter2 = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter2.format(data,4);
 
             var chart = new google.visualization.BubbleChart(document.getElementById('rtx_bubble_div'));
             chart.draw(data, options);
