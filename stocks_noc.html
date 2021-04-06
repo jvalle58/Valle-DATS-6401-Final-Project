@@ -8,7 +8,7 @@
     <title>DATS 6401 - Final Project - Joseph Valle (Northrop Grumman)</title>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
-        google.charts.load('current', {'packages':['corechart']});
+        google.charts.load('current', {'packages':['corechart', 'controls']});
         google.charts.setOnLoadCallback(GoogleDraw);
 
         function GoogleDraw() {
@@ -39,19 +39,45 @@
         function NOCHistoricalClosingPrices(response){
             Warning(response);
             var data = response.getDataTable();
-            var options = {
-                title: 'Historical Closing Prices of Northrop Grumman Stock from 1985 to 2021',
-                colors: ['#3a5fcd'], // #3A5FCD will be the primary color of reference for Northrop Grumman in this project.
-                vAxis: {title: 'Closing Price ($)'},
-                hAxis: {title: 'Date'},
-                legend: 'none',
-            };
+            var chart = new google.visualization.ChartWrapper({
+                'chartType': 'AreaChart',
+                'containerId': 'noc_historical_prices_div',
+                'options': {
+                    'title': 'Historical Closing Prices of Northrop Grumman Stock from 1985 to 2021',
+                    'colors': ['#3a5fcd'], // #3A5FCD will be our primary color of reference for Northrop Grumman in this project.
+                    'vAxis': {
+                        title: 'Closing Price ($)',
+                        format: '$#,###',
+                    },
+                    'hAxis': {
+                        title: 'Date',
+                        format: 'MMM d, YYYY', 
+                    },
+                    'crosshair': {
+                        'color': '#000',
+                        'trigger': 'both', 
+                    },
+                    'legend': 'none',
+                }
+            });
             var formatter = new google.visualization.NumberFormat({
-                fractionDigits: 2, prefix: '$'});
-            formatter.format(data,1);
+                fractionDigits: 2, prefix: '$'}); 
+                formatter.format(data,1);
 
-            var chart = new google.visualization.AreaChart(document.getElementById('noc_historical_prices_div'));
-            chart.draw(data, options);
+            var dashboard = new google.visualization.Dashboard(
+                document.getElementById('dashboard_div'));
+
+            var ChartSlider = new google.visualization.ControlWrapper({
+                'controlType': 'DateRangeFilter',
+                'containerId': 'slider_div',
+                'options': {
+                    'filterColumnLabel': 'Date',
+                    'ui': {'label': 'Date Range:'},
+                    },
+            });
+
+            dashboard.bind(ChartSlider, chart);
+            dashboard.draw(data);
         }
 
         function NOCGreatestCloses(response){
@@ -64,7 +90,7 @@
                 hAxis: {title: 'Change in Closing Price ($)'},
                 colors: ['#3a5fcd'],
                 legend: 'none',
-            }
+            };
             var formatter = new google.visualization.NumberFormat({
                 fractionDigits: 2, prefix: '$'});
                 formatter.format(data,1);
@@ -80,6 +106,10 @@
                 title: 'Frequency Shares of Closing Price Ranges for Northrop Grumman Stock from 1985 to 2021',
                 pieHole: 0.35,
             };
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter.format(data,1);
+
             var chart = new google.visualization.PieChart(document.getElementById('noc_close_shares_div'));
             chart.draw(data, options);
         }
@@ -101,7 +131,7 @@
                 },
                 colors: ['#3a5fcd'],
                 legend: 'none',
-            }
+            };
             var formatter = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
                 formatter.format(data,1);
@@ -113,23 +143,53 @@
         function NOCAnnualReturns(response){
             Warning(response);
             var data = response.getDataTable();
-            var options = {
-                title: 'Northrop Grumman Annual Returns from 1985 to 2021',
-                vAxis: {title: 'Annual Return (%)'},
-                hAxis: {
-                    title: 'Year',
-                    format: '0000',
-                },
-                colors: ['#3a5fcd'],
-                lineWidth: 3,
-                legend: 'none',
-            }
+            var chart = new google.visualization.ChartWrapper({
+                'chartType': 'LineChart',
+                'containerId': 'noc_annual_returns_div',
+                'options': {
+                    'title': 'Northrop Grumman Annual Returns from 1985 to 2021',
+                    'colors': ['#3a5fcd'],
+                    'vAxis': {
+                        title: 'Annual Return (%)',
+                        format: 'short',
+                    },
+                    'hAxis': {
+                        title: 'Year',
+                        format: '0000',
+                    },
+                    'crosshair': {
+                        'color': '#000',
+                        'trigger': 'both', 
+                    },
+                    'lineWidth': 3,
+                    'pointsVisible': true,
+                    'legend': 'none',
+                }
+            });
             var formatter = new google.visualization.NumberFormat({
-                fractionDigits: 2, suffix: '%'});
+                fractionDigits: 2, suffix: '%'}); 
                 formatter.format(data,1);
 
-            var chart = new google.visualization.LineChart(document.getElementById('noc_annual_returns_div'));
-            chart.draw(data, options);
+            var dashboard = new google.visualization.Dashboard(
+                document.getElementById('dashboard_div'));
+
+            var ChartSlider = new google.visualization.ControlWrapper({
+                'controlType': 'NumberRangeFilter',
+                'containerId': 'year_slider_div',
+                'options': {
+                    'filterColumnLabel': 'Year',
+                    'ui': {
+                        'label': 'Year Range:',
+                        'format': {
+                            fractionDigits: 0,
+                            groupingSymbol: '',
+                        }
+                    },
+                    },
+            });
+
+            dashboard.bind(ChartSlider, chart);
+            dashboard.draw(data);
         }
 
         function NOCVolumeShares(response){
@@ -139,6 +199,10 @@
                 title: 'Frequency Shares of Volume Ranges for Northrop Grumman Stock from 1985 to 2021',
                 pieHole: 0.35,
             };
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter.format(data,1);
+
             var chart = new google.visualization.PieChart(document.getElementById('noc_volume_shares_div'));
             chart.draw(data, options);
         }
@@ -153,7 +217,11 @@
                 vAxis: {title: 'Volume'},
                 colors: ['#3a5fcd'],
                 legend: 'none',
-            }
+            };
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '###,###'});
+                formatter.format(data,1);
+
             var chart = new google.visualization.ColumnChart(document.getElementById('noc_greatest_volumes_div'));
             chart.draw(data, options);
         }
@@ -218,7 +286,10 @@
             The days where it traded the most, along with its frequency shares with respect to closing price and volume, have likewise been provided.
         </p>
         <h5>Prices</h5>
-        <div id="noc_historical_prices_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
+        <div id= "dashboard_div">
+            <div id = "noc_historical_prices_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
+            <h6><div id = "slider_div" style="width: 400px; height: 5px; display: block; margin: 0 auto;"></div></h6>
+        </div>
         <br>
         <table>
             <tr>
@@ -233,7 +304,12 @@
                 <td><div id="noc_greatest_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
                 <td><div id="noc_annual_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
             </tr>
+            <tr>
+                <td></td>
+                <td><h6><div id = "year_slider_div" style="width: 400px; height: 5px; display: block; margin: 0 auto;"></div></h6></td>
+            </tr>
         </table>
+        <br>
         <br>
         <h5>Volumes</h5>
         <table>
