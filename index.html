@@ -50,7 +50,7 @@
                     },
                     'crosshair': {
                         'color': '#000',
-                        'trigger': 'both', // The crosshair offers the user the ability to interact with the chart by floating over and selecting a point to focus on.
+                        'trigger': 'both', // The crosshair offers the user the ability to float over and selecting a point to focus on.
                     },
                     'legend': 'none',
                 }
@@ -64,7 +64,7 @@
 
             var ChartSlider = new google.visualization.ControlWrapper({
                 'controlType': 'DateRangeFilter',
-                'containerId': 'time_slider_div',
+                'containerId': 'time_slider_div', // This feature allows the user to interact with the chart by adjusting which dates in the data's range to view.
                 'options': {
                     'filterColumnLabel': 'Date',
                     'ui': {'label': 'Date Range:'},
