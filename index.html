@@ -67,10 +67,13 @@
                 'containerId': 'time_slider_div', // This feature allows the user to interact with the chart by adjusting which dates in the data's range to view.
                 'options': {
                     'filterColumnLabel': 'Date',
-                    'ui': {'label': 'Date Range:'},
+                    'ui': {
+                        'label': 'Date Range:',
+                        'format': {pattern: 'MMM d, YYYY'} // This makes it convenient for the user to select a desired range of dates by applying the same format from the X-axis.
+                    },
                     },
             });
-
+            
             dashboard.bind(ChartSlider, chart);
             dashboard.draw(data);
         }
@@ -105,13 +108,16 @@
                 document.getElementById('dashboard_div'));
 
             var ChartSlider = new google.visualization.ControlWrapper({
-                'controlType': 'DateRangeFilter',
-                'containerId': 'time_slider_div', // This feature allows the user to interact with the chart by adjusting which dates in the data's range to view.
+                'controlType': 'NumberRangeFilter',
+                'containerId': 'year_slider_div',
                 'options': {
-                    'filterColumnLabel': 'Date',
+                    'filterColumnLabel': 'Year',
                     'ui': {
-                        'label': 'Date Range:',
-                        'format': {pattern: 'MMM d, YYYY'} // This makes it convenient for the user to select a desired range of dates by applying the same format from the X-axis.
+                        'label': 'Year Range:',
+                        'format': {
+                            fractionDigits: 0,
+                            groupingSymbol: '',
+                        }
                     },
                     },
             });
