@@ -105,16 +105,13 @@
                 document.getElementById('dashboard_div'));
 
             var ChartSlider = new google.visualization.ControlWrapper({
-                'controlType': 'NumberRangeFilter',
-                'containerId': 'year_slider_div',
+                'controlType': 'DateRangeFilter',
+                'containerId': 'time_slider_div', // This feature allows the user to interact with the chart by adjusting which dates in the data's range to view.
                 'options': {
-                    'filterColumnLabel': 'Year',
+                    'filterColumnLabel': 'Date',
                     'ui': {
-                        'label': 'Year Range:',
-                        'format': {
-                            fractionDigits: 0,
-                            groupingSymbol: '',
-                        }
+                        'label': 'Date Range:',
+                        'format': {pattern: 'MMM d, YYYY'} // This makes it convenient for the user to select a desired range of dates by applying the same format from the X-axis.
                     },
                     },
             });
