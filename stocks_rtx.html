@@ -40,24 +40,24 @@
             Warning(response);
             var data = response.getDataTable();
             var chart = new google.visualization.ChartWrapper({
-                'chartType': 'AreaChart',
-                'containerId': 'rtx_historical_prices_div',
-                'options': {
-                    'title': 'Historical Closing Prices of Raytheon Technologies Stock from 1985 to 2021',
-                    'colors': ['#cd2626'], // #CD2626 will be our primary color of reference for Raytheon Technologies in this project.
-                    'vAxis': {
+                chartType: 'AreaChart',
+                containerId: 'rtx_historical_prices_div',
+                options: {
+                    title: 'Historical Closing Prices of Raytheon Technologies Stock from 1985 to 2021',
+                    colors: ['#cd2626'], // #CD2626 will be our primary color of reference for Raytheon Technologies in this project.
+                    vAxis: {
                         title: 'Closing Price ($)',
                         format: '$#,###',
                     },
-                    'hAxis': {
+                    hAxis: {
                         title: 'Date',
                         format: 'MMM d, YYYY', 
                     },
-                    'crosshair': {
-                        'color': '#000',
-                        'trigger': 'both', 
+                    crosshair: {
+                        color: '#000',
+                        trigger: 'both', 
                     },
-                    'legend': 'none',
+                    legend: 'none',
                 }
             });
             var formatter = new google.visualization.NumberFormat({
@@ -68,15 +68,12 @@
                 document.getElementById('dashboard_div'));
 
             var ChartSlider = new google.visualization.ControlWrapper({
-                'controlType': 'DateRangeFilter',
-                'containerId': 'slider_div',
-                'options': {
-                    'filterColumnLabel': 'Date',
-                    'ui': {
-                        'label': 'Date Range:',
-                        'format': {pattern: 'MMM d, YYYY'}
-                    },
-                    },
+                controlType: 'ChartRangeFilter',
+                containerId: 'time_slider_div',
+                options: {
+                    filterColumnIndex: 0,
+                    ui: {chartType: 'LineChart'},
+                }
             });
 
             dashboard.bind(ChartSlider, chart);
@@ -147,22 +144,22 @@
             Warning(response);
             var data = response.getDataTable();
             var chart = new google.visualization.ChartWrapper({
-                'chartType': 'LineChart',
-                'containerId': 'rtx_annual_returns_div',
-                'options': {
-                    'title': 'Raytheon Technologies Annual Returns from 1985 to 2021',
-                    'colors': ['#cd2626'],
-                    'vAxis': {
+                chartType: 'LineChart',
+                containerId: 'rtx_annual_returns_div',
+                options: {
+                    title: 'Raytheon Technologies Annual Returns from 1985 to 2021',
+                    colors: ['#cd2626'],
+                    vAxis: {
                         title: 'Annual Return (%)',
                         format: 'short',
                     },
-                    'hAxis': {
+                    hAxis: {
                         title: 'Year',
                         format: '0000',
                     },
-                    'lineWidth': 3,
-                    'pointsVisible': true,
-                    'legend': 'none',
+                    lineWidth: 3,
+                    pointsVisible: true,
+                    legend: 'none',
                 }
             });
             var formatter = new google.visualization.NumberFormat({
@@ -173,13 +170,13 @@
                 document.getElementById('dashboard_div'));
 
             var ChartSlider = new google.visualization.ControlWrapper({
-                'controlType': 'NumberRangeFilter',
-                'containerId': 'year_slider_div',
-                'options': {
-                    'filterColumnLabel': 'Year',
-                    'ui': {
-                        'label': 'Year Range:',
-                        'format': {
+                controlType: 'NumberRangeFilter',
+                containerId: 'year_slider_div',
+                options: {
+                    filterColumnLabel: 'Year',
+                    ui: {
+                        label: 'Year Range:',
+                        format: {
                             fractionDigits: 0,
                             groupingSymbol: '',
                         }
@@ -286,7 +283,7 @@
         <h5>Prices</h5>
         <div id= "dashboard_div">
             <div id = "rtx_historical_prices_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
-            <h6><div id = "slider_div" style="width: 400px; height: 5px; display: block; margin: 0 auto;"></div></h6>
+            <h6><div id = "time_slider_div" style="width: 943px; height: 110px; display: block; margin: 0 auto;"></div></h6>
         </div>
         <br>
         <table>
