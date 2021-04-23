@@ -35,24 +35,24 @@
             Warning(response);
             var data = response.getDataTable();
             var chart = new google.visualization.ChartWrapper({
-                'chartType': 'AreaChart',
-                'containerId': 'spx_historical_prices_div',
-                'options': {
-                    'title': 'Historical Closing Prices of the S&P 500 Index from 1985 to 2021',
-                    'colors': ['green'], // Green will be our primary color of reference for the S&P 500 in this project.
-                    'vAxis': {
+                chartType: 'AreaChart',
+                containerId: 'spx_historical_prices_div',
+                options: {
+                    title: 'Historical Closing Prices of the S&P 500 Index from 1985 to 2021',
+                    colors: ['green'], // Green will be our primary color of reference for the S&P 500 in this project.
+                    vAxis: {
                         title: 'Closing Price ($)',
                         format: '$#,###',
                     },
-                    'hAxis': {
+                    hAxis: {
                         title: 'Date',
                         format: 'MMM d, YYYY', // An example date with this format is Jun 5, 2005.
                     },
-                    'crosshair': {
-                        'color': '#000',
-                        'trigger': 'both', // The crosshair offers the user the ability to float over and selecting a point to focus on.
+                    crosshair: {
+                        color: '#000',
+                        trigger: 'both', // The crosshair offers the user the ability to float over and selecting a point to focus on.
                     },
-                    'legend': 'none',
+                    legend: 'none',
                 }
             });
             var formatter = new google.visualization.NumberFormat({
@@ -63,17 +63,14 @@
                 document.getElementById('dashboard_div'));
 
             var ChartSlider = new google.visualization.ControlWrapper({
-                'controlType': 'DateRangeFilter',
-                'containerId': 'time_slider_div', // This feature allows the user to interact with the chart by adjusting which dates in the data's range to view.
-                'options': {
-                    'filterColumnLabel': 'Date',
-                    'ui': {
-                        'label': 'Date Range:',
-                        //'format': {pattern: 'MMM d, YYYY'} // This makes it convenient for the user to select a desired range of dates by applying the same format from the X-axis.
-                    },
-                    },
+                controlType: 'ChartRangeFilter', // We want to give the user the option to interact with the chart by sliding the thumbs and view any date range covered for a closer look at the data.
+                containerId: 'time_slider_div',
+                options: {
+                    filterColumnIndex: 0, // The index points to the first column queried (Date).
+                    ui: {chartType: 'LineChart'},
+                }
             });
-            
+
             dashboard.bind(ChartSlider, chart);
             dashboard.draw(data);
         }
@@ -82,22 +79,22 @@
             Warning(response);
             var data = response.getDataTable();
             var chart = new google.visualization.ChartWrapper({
-                'chartType': 'LineChart',
-                'containerId': 'spx_annual_returns_div',
-                'options': {
-                    'title': 'S&P 500 Annual Returns from 1985 to 2021',
-                    'colors': ['green'],
-                    'vAxis': {
+                chartType: 'LineChart',
+                containerId: 'spx_annual_returns_div',
+                options: {
+                    title: 'S&P 500 Annual Returns from 1985 to 2021',
+                    colors: ['green'],
+                    vAxis: {
                         title: 'Annual Return (%)',
                         format: 'short',
                     },
-                    'hAxis': {
+                    hAxis: {
                         title: 'Year',
                         format: '0000',
                     },
-                    'lineWidth': 3,
-                    'pointsVisible': true,
-                    'legend': 'none',
+                    lineWidth: 3,
+                    pointsVisible: true,
+                    legend: 'none',
                 }
             });
             var formatter = new google.visualization.NumberFormat({
@@ -108,13 +105,13 @@
                 document.getElementById('dashboard_div'));
 
             var ChartSlider = new google.visualization.ControlWrapper({
-                'controlType': 'NumberRangeFilter',
-                'containerId': 'year_slider_div',
-                'options': {
-                    'filterColumnLabel': 'Year',
-                    'ui': {
-                        'label': 'Year Range:',
-                        'format': {
+                controlType: 'NumberRangeFilter',
+                containerId: 'year_slider_div',
+                options: {
+                    filterColumnLabel: 'Year',
+                    ui: {
+                        label: 'Year Range:',
+                        format: {
                             fractionDigits: 0,
                             groupingSymbol: '',
                         }
@@ -193,7 +190,7 @@
         </p>
         <div id= "dashboard_div">
             <div id = "spx_historical_prices_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
-            <h6><div id = "time_slider_div" style="width: 400px; height: 5px; display: block; margin: 0 auto;"></div></h6>
+            <h6><div id = "time_slider_div" style="width: 943px; height: 110px; display: block; margin: 0 auto;"></div></h6>
         </div>
         <br>
         <div id="dashboard_div">
