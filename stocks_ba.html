@@ -5,20 +5,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DATS 6401 - Final Project - Joseph Valle (Boeing)</title>
+    <title>DATS 6401 - Final Project - Joseph Valle (Lockheed Martin)</title>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
         google.charts.load('current', {'packages':['corechart', 'controls']});
         google.charts.setOnLoadCallback(GoogleDraw);
 
         function GoogleDraw() {
-            Drawing('boeing', 'SELECT C,G', BAHistoricalClosingPrices); // Boeing historical closing prices from 1985 to 2021
-            Drawing('greatest-closes-returns', 'SELECT A,C', BAGreatestCloses); // Greatest absolute changes in Boeing stock
-            Drawing('shares', 'SELECT A,B', BACloseShares); // Frequency breakdowns of certain closing price ranges for Boeing
-            Drawing('greatest-closes-returns', 'SELECT G,J', BAGreatestReturns); // Greatest relative changes in Boeing stock
-            Drawing('annuals', 'SELECT A,C', BAAnnualReturns); // Boeing annual returns from 1985 to 2021
-            Drawing('shares', 'SELECT H,I', BAVolumeShares); // Frequency breakdowns of certain volume ranges for Boeing
-            Drawing('greatest-volumes', 'SELECT A,B', BAGreatestVolumes); // Ten greatest volumes posted by Boeing
+            Drawing('lockheed-martin', 'SELECT C,G', LMTHistoricalClosingPrices); // Lockheed Martin historical closing prices from 1985 to 2021
+            Drawing('greatest-closes-returns', 'SELECT Y,AA', LMTGreatestCloses); // Greatest absolute changes in Lockheed Martin stock
+            Drawing('shares', 'SELECT A,D', LMTCloseShares); // Frequency breakdowns of certain closing price ranges for Lockheed Martin
+            Drawing('greatest-closes-returns', 'SELECT AE,AH', LMTGreatestReturns); // Greatest relative changes in Lockheed Martin stock
+            Drawing('annuals', 'SELECT I,K', LMTAnnualReturns); // Lockheed Martin annual returns from 1985 to 2021
+            Drawing('shares', 'SELECT H,K', LMTVolumeShares); // Frequency breakdowns of certain volume ranges for Lockheed Martin
+            Drawing('greatest-volumes', 'SELECT AA,AB', LMTGreatestVolumes); // Ten greatest volumes posted by Lockheed Martin
         }
 
         function Drawing(sheet, query, StockVisual){
@@ -36,28 +36,28 @@
             }
         }
 
-        function BAHistoricalClosingPrices(response){
+        function LMTHistoricalClosingPrices(response){
             Warning(response);
             var data = response.getDataTable();
             var chart = new google.visualization.ChartWrapper({
-                'chartType': 'AreaChart',
-                'containerId': 'ba_historical_prices_div',
-                'options': {
-                    'title': 'Historical Closing Prices of Boeing Stock from 1985 to 2021',
-                    'colors': ['purple'], // Purple will be our primary color of reference for Boeing in this project.
-                    'vAxis': {
+                chartType: 'AreaChart',
+                containerId: 'lmt_historical_prices_div',
+                options: {
+                    title: 'Historical Closing Prices of Lockheed Martin Stock from 1985 to 2021',
+                    colors: ['#fd6a00'], // #FD6A00 will be our primary color of reference for Lockheed Martin in this project.
+                    vAxis: {
                         title: 'Closing Price ($)',
                         format: '$#,###',
                     },
-                    'hAxis': {
+                    hAxis: {
                         title: 'Date',
                         format: 'MMM d, YYYY', 
                     },
-                    'crosshair': {
-                        'color': '#000',
-                        'trigger': 'both', 
+                    crosshair: {
+                        color: '#000',
+                        trigger: 'both', 
                     },
-                    'legend': 'none',
+                    legend: 'none',
                 }
             });
             var formatter = new google.visualization.NumberFormat({
@@ -68,125 +68,122 @@
                 document.getElementById('dashboard_div'));
 
             var ChartSlider = new google.visualization.ControlWrapper({
-                'controlType': 'DateRangeFilter',
-                'containerId': 'slider_div',
-                'options': {
-                    'filterColumnLabel': 'Date',
-                    'ui': {
-                        'label': 'Date Range:',
-                        'format': {pattern: 'MMM d, YYYY'}
-                    },
-                    },
+                controlType: 'ChartRangeFilter',
+                containerId: 'time_slider_div',
+                options: {
+                    filterColumnIndex: 0,
+                    ui: {chartType: 'LineChart'},
+                }
             });
 
             dashboard.bind(ChartSlider, chart);
             dashboard.draw(data);
         }
 
-        function BAGreatestCloses(response){
+        function LMTGreatestCloses(response){
             Warning(response);
             var data = response.getDataTable();
-            data.sort({column: 1, desc: true}); // The resulting graph has its values sorted from highest to lowest.
+            data.sort({column: 1, desc: true});
             var options = {
-                title: 'Greatest Absolute Rises and Declines in Boeing Stock from 1985 to 2021',
+                title: 'Greatest Absolute Rises and Declines in Lockheed Martin Stock from 1985 to 2021',
                 vAxis: {title: 'Date'},
                 hAxis: {
                     title: 'Change in Closing Price ($)',
-                    viewWindow: { // The axis window installs a min and a max to help limit the amount of white space.
+                    viewWindow: {
                         min: -50,
                         max: 40,
                     },
                     gridlines: {count: 5},
                 },
-                colors: ['purple'],
+                colors: ['#fd6a00'],
                 legend: 'none',
             };
             var formatter = new google.visualization.NumberFormat({
                 fractionDigits: 2, prefix: '$'});
                 formatter.format(data,1);
 
-            var chart = new google.visualization.BarChart(document.getElementById('ba_greatest_closes_div'));
+            var chart = new google.visualization.BarChart(document.getElementById('lmt_greatest_closes_div'));
             chart.draw(data, options);
         }
 
-        function BACloseShares(response){
+        function LMTCloseShares(response){
             Warning(response);
             var data = response.getDataTable();
             var options = {
-                title: 'Frequency Shares of Closing Price Ranges for Boeing Stock from 1985 to 2021',
-                pieHole: 0.35, // The resulting graph is a donut chart due to its hole.
+                title: 'Frequency Shares of Closing Price Ranges for Lockheed Martin Stock from 1985 to 2021',
+                pieHole: 0.35,
             };
             var formatter = new google.visualization.NumberFormat({
-                pattern: '###,###'}); // Large numbers are formatted to be separated by commas.
+                pattern: '###,###'});
                 formatter.format(data,1);
 
-            var chart = new google.visualization.PieChart(document.getElementById('ba_close_shares_div'));
+            var chart = new google.visualization.PieChart(document.getElementById('lmt_close_shares_div'));
             chart.draw(data, options);
         }
 
-        function BAGreatestReturns(response){
+        function LMTGreatestReturns(response){
             Warning(response);
             var data = response.getDataTable();
             data.sort({column: 1, desc: true});
             var options = {
-                title: 'Greatest Relative Rises and Declines in Boeing Stock from 1985 to 2021',
+                title: 'Greatest Relative Rises and Declines in Lockheed Martin Stock from 1985 to 2021',
                 vAxis: {title: 'Date'},
                 hAxis: {
                     title: 'Daily Return (%)',
                     viewWindow: {
                         min: -30,
-                        max: 30,
+                        max: 20,
                     },
-                    gridlines: {count: 5},
+                    gridlines: {count: 5}
                 },
-                colors: ['purple'],
+                colors: ['#fd6a00'],
                 legend: 'none',
             };
             var formatter = new google.visualization.NumberFormat({
                 fractionDigits: 2, suffix: '%'});
                 formatter.format(data,1);
 
-            var chart = new google.visualization.BarChart(document.getElementById('ba_greatest_returns_div'));
+            var chart = new google.visualization.BarChart(document.getElementById('lmt_greatest_returns_div'));
             chart.draw(data, options);
         }
 
-        function BAAnnualReturns(response){
+        function LMTAnnualReturns(response){
             Warning(response);
             var data = response.getDataTable();
             var chart = new google.visualization.ChartWrapper({
-                'chartType': 'LineChart',
-                'containerId': 'ba_annual_returns_div',
-                'options': {
-                    'title': 'Boeing Annual Returns from 1985 to 2021',
-                    'colors': ['purple'],
-                    'vAxis': {
+                chartType: 'LineChart',
+                containerId: 'lmt_annual_returns_div',
+                options: {
+                    title: 'Lockheed Martin Annual Returns from 1985 to 2021',
+                    colors: ['#fd6a00'],
+                    vAxis: {
                         title: 'Annual Return (%)',
                         format: 'short',
                     },
-                    'hAxis': {
+                    hAxis: {
                         title: 'Year',
                         format: '0000',
                     },
-                    'lineWidth': 3,
-                    'pointsVisible': true,
-                    'legend': 'none',
+                    lineWidth: 3,
+                    pointsVisible: true,
+                    legend: 'none',
                 }
             });
             var formatter = new google.visualization.NumberFormat({
-                fractionDigits: 2, suffix: '%'});
+                fractionDigits: 2, suffix: '%'}); 
                 formatter.format(data,1);
 
             var dashboard = new google.visualization.Dashboard(
                 document.getElementById('dashboard_div'));
 
             var ChartSlider = new google.visualization.ControlWrapper({
-                'controlType': 'NumberRangeFilter',
-                'containerId': 'year_slider_div',
-                'options': {
-                    'filterColumnLabel': 'Year',
-                    'ui': {
-                        'label': 'Year Range:',
-                        'format': {
+                controlType: 'NumberRangeFilter',
+                containerId: 'year_slider_div',
+                options: {
+                    filterColumnLabel: 'Year',
+                    ui: {
+                        label: 'Year Range:',
+                        format: {
                             fractionDigits: 0,
                             groupingSymbol: '',
                         }
@@ -198,37 +195,37 @@
             dashboard.draw(data);
         }
 
-        function BAVolumeShares(response){
+        function LMTVolumeShares(response){
             Warning(response);
             var data = response.getDataTable();
             var options = {
-                title: 'Frequency Shares of Volume Ranges for Boeing Stock from 1985 to 2021',
+                title: 'Frequency Shares of Volume Ranges for Lockheed Martin Stock from 1985 to 2021',
                 pieHole: 0.35,
             };
             var formatter = new google.visualization.NumberFormat({
                 pattern: '###,###'});
                 formatter.format(data,1);
 
-            var chart = new google.visualization.PieChart(document.getElementById('ba_volume_shares_div'));
+            var chart = new google.visualization.PieChart(document.getElementById('lmt_volume_shares_div'));
             chart.draw(data, options);
         }
 
-        function BAGreatestVolumes(response){
+        function LMTGreatestVolumes(response){
             Warning(response);
             var data = response.getDataTable();
             data.sort({column: 1, desc: true});
             var options = {
-                title: 'Trading Sessions with the Greatest Volumes for Boeing Stock from 1985 to 2021',
+                title: 'Trading Sessions with the Greatest Volumes for Lockheed Martin Stock from 1985 to 2021',
                 hAxis: {title: 'Date'},
                 vAxis: {title: 'Volume'},
-                colors: ['purple'],
+                colors: ['#fd6a00'],
                 legend: 'none',
             };
             var formatter = new google.visualization.NumberFormat({
                 pattern: '###,###'});
                 formatter.format(data,1);
 
-            var chart = new google.visualization.ColumnChart(document.getElementById('ba_greatest_volumes_div'));
+            var chart = new google.visualization.ColumnChart(document.getElementById('lmt_greatest_volumes_div'));
             chart.draw(data, options);
         }
 
@@ -283,33 +280,32 @@
       </div>
 
       <div id="content">
-        <h4>The Boeing Company (BA) in the Stock Market</h4>
+        <h4>Lockheed Martin Corporation (LMT) in the Stock Market</h4>
         <p>
-            We first begin our investigation with Boeing (BA).
-            By far, it is the largest of the five in our list in terms of market capitalization, defined as the market price of its stock multiplied by the total number of shares.
-            Given its relatively large position within the stock market, Boeing continues to draw investors over its latest developments in commercial, military, and space aircraft.
-            From a national security standpoint, the latter has especially become more significant upon the establishment of the US Space Force in 2019.
-            You will have the opportunity to evaluate its historical closing prices and annual returns from 1985 to 2021, as well as its most significant absolute and relative changes in its stock over that time.
-            The ten trading sessions exhibiting its highest volumes, along with its frequency shares with respect to certain closing price and volume ranges, are also included.
+            Of all the contractors included in our list, perhaps none has drawn more attention for its array of fighter jets than Lockheed Martin (LMT).
+            In fact, Lockheed Martin's history with these jets dates back to World War II, when it established a strategic military base at its production plant in Burbank, CA following the Japanese attack at Pearl Harbor.
+            Under Operation Camouflage and the direction of Colonel John F. Ohmer, the contractor made it an essential priority to disguise its Burbank facility as a suburb while spurring the development of jets and other military weapons to support the Allied cause in the Pacific.
+            Today, it continues to engineer military aircraft with even greater capabilities, including the well-known F-35 Lightning II as of late.
+            This presentation's findings regarding its historical prices, returns, and volumes over our time span are assembled below.
         </p>
         <h5>Prices</h5>
         <div id= "dashboard_div">
-            <div id = "ba_historical_prices_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
-            <h6><div id = "slider_div" style="width: 400px; height: 5px; display: block; margin: 0 auto;"></div></h6>
+            <div id = "lmt_historical_prices_div" style="width: 1153px; height: 550px; display: block; margin: 0 auto;"></div>
+            <h6><div id = "time_slider_div" style="width: 943px; height: 110px; display: block; margin: 0 auto;"></div></h6>
         </div>
         <br>
         <table>
             <tr>
-                <td><div id="ba_greatest_closes_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
-                <td><div id="ba_close_shares_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="lmt_greatest_closes_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="lmt_close_shares_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
             </tr>
         </table>
         <br>
         <h5>Returns</h5>
         <table>
             <tr>
-                <td><div id="ba_greatest_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
-                <td><div id="ba_annual_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="lmt_greatest_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="lmt_annual_returns_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
             </tr>
             <tr>
                 <td></td>
@@ -321,8 +317,8 @@
         <h5>Volumes</h5>
         <table>
             <tr>
-                <td><div id="ba_volume_shares_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
-                <td><div id="ba_greatest_volumes_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="lmt_volume_shares_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
+                <td><div id="lmt_greatest_volumes_div" style="width: 573px; height: 550px; display: block; margin: 0 auto;"></div></td>
             </tr>
         </table>
     </div>
